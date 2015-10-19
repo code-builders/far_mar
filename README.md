@@ -67,7 +67,7 @@ For each of the data classes build the following methods:
 
 - `vendors` - returns a collection of `Vendor` instances that are associated with the market by the market_id field.
 - `find_by_state(state_name)` - Returns the first `Market` object with a state name which matches the input
-- `find_by_state(state_name)` - Returns a list of all `Market` objects with a state name that matches the input
+- `find_all_by_state(state_name)` - Returns a list of all `Market` objects with a state name that matches the input
 
 **Unique Vendor Methods**
 
