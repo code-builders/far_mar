@@ -36,7 +36,9 @@ class FarMar::Market
   end
 
   def self.find(id)
-    all[id-1]
+    all.find do |obj|
+      obj.id == id
+    end
   end
 
 
