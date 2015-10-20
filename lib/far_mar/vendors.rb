@@ -1,0 +1,3 @@
+class FarMar::Vendors
+
+end

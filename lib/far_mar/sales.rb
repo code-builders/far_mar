@@ -1,0 +1,3 @@
+class FarMar::Sales
+
+end
