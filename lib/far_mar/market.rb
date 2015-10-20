@@ -42,6 +42,4 @@ class FarMar::Market
   end
 
 
-
-
 end
