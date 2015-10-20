@@ -24,7 +24,7 @@ class FarMar::Market
   def self.all
     CSV.open(path).map do |line|
       new(
-        id:        line[0],
+        id:        line[0].to_i,
         name:      line[1],
         address:   line[2],
         city:      line[3],
@@ -36,7 +36,10 @@ class FarMar::Market
   end
 
   def self.find(id)
-
+    all[id-1]
   end
+
+
+
 
 end
