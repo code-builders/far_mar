@@ -39,33 +39,7 @@ class FarMar::Market#capitalize all names of class
        new_market = FarMar::Market.new(row_info)
        new_market_array << new_market
      end
-     new_market_array
-   end
-
-# #
-# def self.find(id)
-#
-#   new_market_array= []
-#   a=CSV.read("support/markets.csv")#read the CSV file
-#   a.each do |row|
-#
-#     row_info = {
-#       id:row [0].to_i,
-#       name:  row[1],
-#       address: row[2],
-#       city: row [3],
-#       count: row[4],
-#       state: row[5],
-#       zip: row[6],
-#     }
-#
-# end
-#     if row[0].to_i == id
-#       newmarket = FarMar::Market.new(row_info)
-#       new_market_object<< newmarket
-#         end
-#
-#       end
+     end
 
 
 
@@ -73,9 +47,26 @@ class FarMar::Market#capitalize all names of class
 
 
 #
-# end
-# self.all - returns all rows of the CSV file as objects
+  def self.find(id)
 
-# self.find(id)returns the row where the ID field matches the argument
+    new_market_array= []
+    a=CSV.read("support/markets.csv")#read the CSV file
+    a.each do |row|
 
+      row_info = {
+        id:row [0].to_i,
+        name:  row[1],
+        address: row[2],
+        city: row [3],
+        count: row[4],
+        state: row[5],
+        zip: row[6],
+      }
+
+      if row[0].to_i == id
+        newmarket = FarMar::Market.new(row_info)
+        new_market_object<< newmarket
+      end
+    end
 end
+  end
