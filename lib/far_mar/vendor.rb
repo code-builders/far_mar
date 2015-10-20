@@ -1,5 +1,8 @@
 # TO DO:
-# -
+# - clarify self.by_market method with BW. What should it return?
+
+# COMMIT NOTES:
+# - added "self.all, self.find, self.by_market, .company_size, and .market methods for Vendor class"
 
 require 'csv'
 
@@ -45,24 +48,48 @@ class FarMar::Vendor
 
 ### UNIQUE CLASS METHODS:
   # market - returns the Market instance that is associated with this vendor using the Vendor market_id field
-
+  def market
+    v = self                          # => self = instance of Vendor class
+    @i = v.market_id                  # => mkt id of Vendor instance
+    all_markets = FarMar::Market.all  # => all Market objects
+    match = all_markets.find {|m| m.id == @i} # => id of Market object matches mkt_id of Vendor
+  end
 
   # products - returns a collection of Product instances that are associated with market by the Product vendor_id field.
-
+  def products
+    # TBD! Set up Product class first.
+  end
 
   # sales - returns a collection of Sale instances that are associated with market by the vendor_id field.
-
+  def sale
+    # TBD! Set up Sale class first
+  end
 
   # revenue - returns the the sum of all of the vendor's sales (in cents)
-
+  def revenue #don't think this needs .self -- it's an instance method b/c on specific vendor instance
+    # TBD! Set up Sale (or Product?) class first
+  end
 
   # self.by_market(market_id) - returns a list of all Vendor objects with a market id that matches the input
+  ## What does BW mean here? only one vendor object will result from this search, so not sure what 'all vendor objects' means
+  def self.by_market(market_id)
+    all_vendors = self.all
+    all_vendors.find {|v| v.market_id.to_i == market_id}
+  end
 
+  def company_size # can only call this on instance created by `sample = FM::V.by_market(`mkt_id`)`. will this do?
+    e = self.employees.to_i
 
-  # company_size - returns the size of the company using the following rules:
-    # 1-3 "Family Business"
-    # 4-15 "Small Business"
-    # 16-100 "Medium Business"
-    # 101+ "Big Business"
+    if    e >= 1  && e <= 3
+      puts "Family Business"
+    elsif e >= 4  && e <= 15
+      puts "Small Businesss"
+    elsif e >= 16 && e <= 100
+      puts "Medium Business"
+    elsif e > 101
+      puts "Big Business"
+    end
+
+  end
 
 end

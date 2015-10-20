@@ -55,11 +55,11 @@ class FarMar::Market
 ### UNIQUE CLASS METHODS:
   # vendors - returns a collection of Vendor instances that are associated with the market by the market_id field.
   def self.vendors
-    #TBD! Set up Vendors class first.
+    # TBD! Set up Vendors class first.
   end
 
   def self.find_by_state (state_name)
-    all_markets = self.all
+      all_markets = self.all
     all_markets.find {|m| m.state == state_name}
 
   end
