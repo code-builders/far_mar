@@ -1,3 +1,7 @@
+# TO DO:
+# - update initialize for integer methods - append with .to_i
+
+
 require 'csv'
 
 class FarMar::Market
@@ -36,32 +40,16 @@ class FarMar::Market
 
 ### SHARED CLASS METHODS
   # CLASS METHOD 1
-  def self.all # returns array of 500 FarMar::Market objects, each of which contains hash of all relevant data
-
+  def self.all # returns array of 500 FarMar::Market objects, each of which contains hash of all CSV data
     all_markets_as_objects = @attributes.map do |m|
       FarMar::Market.new(m)
     end
-
-    # random = @all_markets_as_objects.sample
-    # puts "Contents of random index in all_markets_as_objects:"
-    # puts random.inspect
   end
 
   # CLASS METHOD 2:
   def self.find (id)
-
     all_markets = self.all
-
     all_markets.find {|m| m.id.to_i == id.to_i}
-
-    # this works:
-      # puts "id of random market"
-      # random_id = @all_markets_as_objects.sample.id
-      # puts random_id
-
-    # this works:
-      # found_id = @all_markets_as_objects.find {|m| m.id == "1"}
-      # puts found_id.name
   end
 
 ### UNIQUE CLASS METHODS:
