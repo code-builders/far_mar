@@ -78,15 +78,15 @@ class FarMar::Market
     vendor_objects
   end
 
-  def find_by_state(state_name)
-
+  def self.find_by_state(state_name)
     # find_by_state(state_name) - Returns the first Market object with a state name which matches the input
-
+    all_markets = FarMar::Market.all
+    all_markets.find {|market| market.state == state_name.capitalize}
   end
 
-  def find_by_state(state_name)
-
+  def self.find_all_by_state(state_name)
     # find_by_state(state_name) - Returns a list of all Market objects with a state name that matches the input
-
+    all_markets = FarMar::Market.all
+    all_markets.find_all {|market| market.state == state_name.capitalize}
   end
 end
