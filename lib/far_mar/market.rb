@@ -42,10 +42,20 @@ end
       end                 # return the whole array/line of that argument
   end
 
-  def self.find(city)
-      all.find do |obj|
-        obj.city == city
-      end                 
+  def vendors
+    vendor_list = FarMar::Vendors.all
+    full_vendor_list = vendor_list.group_by do |obj|
+      obj.market_id
+    end
+    full_vendor_list[@id]
+    # find.group_by {|id| }
+
   end
+
+  # def self.find(city)
+  #     all.find do |obj|
+  #       obj.city == city
+  #     end
+  # end
 
 end
