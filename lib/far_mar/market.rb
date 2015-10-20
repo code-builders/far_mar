@@ -41,12 +41,11 @@ class FarMar::Market
       # push each new market object into one array called new_market_array
       new_market_array << new_market
     end
-    new_market_array
+    return new_market_array
   end
 
   def self.find(id)
     # self.find(id) - returns the row where the ID field matches the argument
-    new_market_object = []
     market_array = CSV.read("support/markets.csv")
     market_array.each do |market|
       market_info = {
@@ -60,10 +59,9 @@ class FarMar::Market
       }
       if market[0].to_i == id
         new_market = FarMar::Market.new(market_info)
-        new_market_object << new_market
+        return new_market
       end
     end
-    new_market_object[0]
   end
 
   def vendors
@@ -75,7 +73,7 @@ class FarMar::Market
         vendor_objects << vendor
       end
     end
-    vendor_objects
+    return vendor_objects
   end
 
   def self.find_by_state(state_name)
@@ -87,6 +85,6 @@ class FarMar::Market
   def self.find_all_by_state(state_name)
     # find_by_state(state_name) - Returns a list of all Market objects with a state name that matches the input
     all_markets = FarMar::Market.all
-    all_markets.find_all {|market| market.state == state_name.capitalize}
+    return all_markets.find_all {|market| market.state == state_name.capitalize}
   end
 end
