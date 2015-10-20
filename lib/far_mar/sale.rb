@@ -21,7 +21,7 @@ class FarMar::Sale
     CSV.open(path).map do |line|
       new(
         id:            line[0].to_i,
-        amount:        line[1],
+        amount:        line[1].to_f/100,
         purchase_time: line[2],
         vendor_id:     line[3].to_i,
         product_id:    line[4].to_i

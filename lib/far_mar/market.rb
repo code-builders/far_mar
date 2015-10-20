@@ -41,5 +41,13 @@ class FarMar::Market
     end
   end
 
+  def vendors
+    list = FarMar::Vendor.all
+    ans = list.group_by do |obj|
+      obj.market_id
+    end
+    ans[@id]
+  end
+
 
 end
