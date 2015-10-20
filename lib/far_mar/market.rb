@@ -27,6 +27,7 @@ class FarMar::Market#capitalize all names of class
      a=CSV.read("support/markets.csv")#read the CSV file
      a.each do |row|
 
+
        row_info = {
          id:row [0].to_i,
          name:  row[1],
@@ -39,19 +40,15 @@ class FarMar::Market#capitalize all names of class
        new_market = FarMar::Market.new(row_info)
        new_market_array << new_market
      end
+     new_market_array
      end
-
-
-
-
-
 
 #
   def self.find(id)
-
-    new_market_array= []
+    new_market_object= []
     a=CSV.read("support/markets.csv")#read the CSV file
     a.each do |row|
+
 
       row_info = {
         id:row [0].to_i,
@@ -65,8 +62,14 @@ class FarMar::Market#capitalize all names of class
 
       if row[0].to_i == id
         newmarket = FarMar::Market.new(row_info)
-        new_market_object<< newmarket
+        new_market_object << newmarket
+
+
       end
+
     end
-end
+
+    new_market_object
   end
+
+end
