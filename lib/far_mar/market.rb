@@ -12,7 +12,7 @@ class FarMar::Market#capitalize all names of class
     :zip
 
    def initialize (attrs)
-     @id= attrs[0]  #use blocks to access the key of the block in line 28#syntax to pass something into an has
+     @id= attrs[0].to_i  #use blocks to access the key of the block in line 28#syntax to pass something into an has
      @name   = attrs[1]
      @address = attrs[2]
      @city = attrs[3]
@@ -40,40 +40,19 @@ class FarMar::Market#capitalize all names of class
 
   def self.find(i) #find id
     a=CSV.read("support/markets.csv")
-    row_match=a.collect do |row|
-    i == row[0]
+    row_match=a.find do |row|
+    i == row[0].to_i
     end
-
+    # read the csv file of markets
+    # for each row
+    # create a new instance of FarMar:: Market
+    # compare the i variable(parameter coming in) to the market row id
+    # return if that is a math
+    # creat a new instance with that match
     FarMar::Market.new(row_match)
   end
 
 
 
 
-# vendors - returns a collection of Vendor instances that are associated with the market by the market_id field.
-
-
-
-
-
-
-
-
 end
-#
-#
-#
-#
-#
-#   #
-  # vendors - returns a collection of Vendor instances that are associated with the market by the market_id field.
-#   # find_by_state(state_name) - Returns the first Market object with a state name which matches the input
-#   # find_all_by_state(state_name) - Returns a list of all Market objects with a state name that matches the input
-#
-#
-#
-
-
-
-#
-# vendors - returns a collection of Vendor instances that are associated with the market by the market_id field.
