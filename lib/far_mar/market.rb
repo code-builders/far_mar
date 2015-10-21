@@ -18,11 +18,11 @@ class FarMar::Market
   end
 
   def self.path
-    "/Users/tamarapop/code_builders/projects/far_mar/support/markets.csv"
+    "support/markets.csv"
   end
 
   def self.all
-    CSV.open(path).map do |line|
+    CSV.read(path).map do |line|
       new(
         id:        line[0].to_i,
         name:      line[1],
@@ -46,8 +46,19 @@ class FarMar::Market
     ans = list.group_by do |obj|
       obj.market_id
     end
-    ans[@id]
+    ans[id]
   end
 
+  def self.find_by_state(state_name)
+    all.find do |obj|
+      obj.state == state_name
+    end
+  end
+
+  def self.find_all_by_state(state_name)
+    all.find_all do |obj|
+      obj.state == state_name
+    end
+  end
 
 end
