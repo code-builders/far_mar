@@ -59,8 +59,16 @@ class FarMar::Vendor
   end
 
   def products
-  # products - returns a collection of Product instances that are associated with market by the Product vendor_id field.
-
+  # products - returns a collection of Product instances that are associated with vendor by the Product vendor_id field.
+    # returns array of product instances
+    product_instances = []
+    product_array = FarMar::Product.all
+    product_array.each do |product|
+      if product.vendor_id == @id
+        product_instances << product
+      end
+    end
+    return product_instances
   end
 
   def sales
@@ -75,7 +83,14 @@ class FarMar::Vendor
 
   def self.by_market(market_id)
   # self.by_market(market_id) - returns a list of all Vendor objects with a market id that matches the input
-
+    vendor_array = []
+    all_vendors = FarMar::Vendor.all
+    all_vendors.each do |vendor|
+      if vendor.market_id == market_id
+        vendor_array << vendor
+      end
+    end
+    return vendor_array
   end
 
   def company_size
@@ -84,7 +99,16 @@ class FarMar::Vendor
   # 4-15 "Small Business"
   # 16-100 "Medium Business"
   # 101+ "Big Business"
-
+    if @no_of_employees >= 1 && @no_of_employees <= 3
+      #or can do if (1..3) === @no_of_employees
+      return "Family Business"
+    elsif @no_of_employees >= 4 && @no_of_employees <= 15
+      return "Small Business"
+    elsif @no_of_employees >= 16 && @no_of_employees <= 100
+      return "Medium Business"
+    else
+      return "Big Business"
+    end
   end
 
 end
