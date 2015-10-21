@@ -1,10 +1,9 @@
 ## TO DO
-# - commit note: .vendor, .sales
+# - commit note: 
 
 require 'csv'
 
 class FarMar::Product
-  # Each product belongs to a vendor, the vendor_id field relates to the Vendor ID field.
 
   attr_accessor :id, :name, :vendor_id
 
@@ -18,7 +17,7 @@ class FarMar::Product
   def self.read_file
     all_products = CSV.read("/Users/danieladler/Programming/Code_Builders/ruby_practice/projects/far_mar/support/products.csv", "r")
 
-    attributes = all_products.map do |pr| # will return array of hashes, each containing all info per market
+    attributes = all_products.map do |pr| # ret array of hashes, each containing all info per market
       { id:       pr[0],
         name:     pr[1],
         vendor_id:pr[2]
@@ -36,8 +35,6 @@ class FarMar::Product
 
 ### UNIQUE CLASS METHODS:
 
-  # vendor - returns the Vendor instance that is associated with this vendor using the Product vendor_id field
-
   def vendor # ret Vendor instance assoc w/ product using vendor_id
     all_vendors = FarMar::Vendor.all
     match = all_vendors.find {|v| v.id == self.vendor_id}
@@ -48,11 +45,13 @@ class FarMar::Product
     match = all_sales.find_all {|s| s.product_id == self.id}
   end
 
-  # number_of_sales - returns the number of times this product has been sold.
+  def number_of_sales # ret # of times this product has been sold
+    sales.count
+  end
 
-
-  # self.by_vendor(vendor_id)- returns a list of all Product objects with a vendor id that matches the input
-
-
+  def self.by_vendor(vendor_id) # ret all Products assoc w/ vendor id (input)
+    all_products = self.all
+    all_products.find_all {|p| p.vendor_id == vendor_id}
+  end
 
 end
