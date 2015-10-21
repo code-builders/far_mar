@@ -2,7 +2,7 @@
 # - clarify self.by_market method with BW. What should it return?
 
 # COMMIT NOTES:
-# - added "self.all, self.find, self.by_market, .company_size, and .market methods for Vendor class"
+# - added
 
 require 'csv'
 
@@ -74,7 +74,7 @@ class FarMar::Vendor
   ## What does BW mean here? only one vendor object will result from this search, so not sure what 'all vendor objects' means
   def self.by_market(market_id)
     all_vendors = self.all
-    all_vendors.find {|v| v.market_id.to_i == market_id}
+    all_vendors.find_all {|v| v.market_id.to_i == market_id}
   end
 
   def company_size # can only call this on instance created by `sample = FM::V.by_market(`mkt_id`)`. will this do?
