@@ -14,10 +14,10 @@ class FarMar::Vendor
   attr_accessor :id, :name, :employees, :market_id
 
   def initialize (attrs)
-    @id         = attrs[:id]
+    @id         = attrs[:id].to_i
     @name       = attrs[:name]
     @employees  = attrs[:employees]
-    @market_id  = attrs[:market_id]
+    @market_id  = attrs[:market_id].to_i
   end
 
 ### CLASS VARIABLES:
@@ -55,12 +55,12 @@ class FarMar::Vendor
     match = all_markets.find {|m| m.id == @i} # => id of Market object matches mkt_id of Vendor
   end
 
-  # products - returns a collection of Product instances that are associated with market by the Product vendor_id field.
+  # products - returns a collection of Product instances that are associated with vendor by the Product vendor_id field.
   def products
     # TBD! Set up Product class first.
   end
 
-  # sales - returns a collection of Sale instances that are associated with market by the vendor_id field.
+  # sales - returns a collection of Sale instances that are associated with vendor by the vendor_id field.
   def sale
     # TBD! Set up Sale class first
   end

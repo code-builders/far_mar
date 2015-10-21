@@ -1,9 +1,8 @@
 # TO DO:
-# - update initialize for integer methods - append with .to_i
-# - check with BW about associations in spec file. 'let' means what? rspec returns a memory location - not possible to replicate?
+# - DRY self.find_by_state and self.find_all_by_state
 
 # COMMIT NOTES:
-# - refactored with .self-read file => allow DRY on self.all and self.find methods
+# - added .vendors method for Market class
 
 require 'csv'
 
@@ -60,9 +59,27 @@ class FarMar::Market
   end
 
 ### UNIQUE CLASS METHODS:
-  # vendors - returns a collection of Vendor instances that are associated with the market by the market_id field.
-  def self.vendors
-    # TBD! Set up Vendors class first.
+  def vendors # returns all Vendor instances associated with market by market_id
+    # THOUGHT PROCESS:
+      # puts "self class and name"
+      # puts self.class                         # what IS self at this scope?
+      # puts self.name
+      # puts "self.id (market id)"
+      # puts self.id
+      # puts "random vendor from Vendor class"
+      # puts random = FarMar::Vendor.all.sample
+      # puts "name and mkt id of random vendor from Vendor class"
+      # puts random.name
+      # puts random.market_id
+      # puts "look up all vendors with market_id == 100"
+      #      all_vendors = FarMar::Vendor.all
+      #      match = all_vendors.find_all {|v| v.market_id == 100}
+      # puts "names of vendors with market id == 100"
+      # puts match.each {|v| puts v.name}
+
+    all_vendors = FarMar::Vendor.all
+    match = all_vendors.find_all {|v| v.market_id == self.id}
+
   end
 
   def self.find_by_state (state_name)
