@@ -1,8 +1,9 @@
 # TO DO:
 # - clarify self.by_market method with BW. What should it return?
+# - DRY: add .read_file class method, refactor .all, .find to use .read_file
 
 # COMMIT NOTES:
-# - added
+# - 
 
 require 'csv'
 
