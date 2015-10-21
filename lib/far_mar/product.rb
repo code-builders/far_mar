@@ -1,4 +1,4 @@
-class FarMar::Products
+class FarMar::Product
 
   attr_accessor :id,
                 :name,
@@ -19,7 +19,7 @@ class FarMar::Products
         new(
           id:        line[0].to_i,
           name:      line[1],
-          vendor_id: line[2]
+          vendor_id: line[2].to_i
           )
       end
     end

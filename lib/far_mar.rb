@@ -4,6 +4,6 @@ module FarMar
 end
 
 require_relative "far_mar/market"
-require_relative "far_mar/products"
-require_relative "far_mar/sales"
-require_relative "far_mar/vendors"
+require_relative "far_mar/product"
+require_relative "far_mar/sale"
+require_relative "far_mar/vendor"

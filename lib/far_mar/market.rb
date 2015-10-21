@@ -23,15 +23,15 @@ end
   end
 
   def self.all
-    CSV.open(path).map do |line|
-      new(
-        id:      line[0].to_i,
-        name:    line[1],
-        address: line[2],
+    CSV.open(path).map do |line|    # Read the markets.csv file
+      new(                          # for each row
+        id:      line[0].to_i,      # create a new instance of FarMar::Market
+        name:    line[1],           # create an array of those instances
+        address: line[2],           # return that new array
         city:    line[3],
         county:  line[4],
         state:   line[5],
-        zip:     line[6]
+        zip:     line[6].to_i
         )
     end
   end
@@ -43,19 +43,23 @@ end
   end
 
   def vendors
-    vendor_list = FarMar::Vendors.all
+    vendor_list = FarMar::Vendor.all
     full_vendor_list = vendor_list.group_by do |obj|
       obj.market_id
     end
     full_vendor_list[@id]
-    # find.group_by {|id| }
-
   end
 
-  # def self.find(city)
-  #     all.find do |obj|
-  #       obj.city == city
-  #     end
-  # end
+  def self.find_by_state(state_name)
+    all.find do |obj|
+      obj.state == state_name
+    end
+  end
+
+  def self.find_all_state(state_name)
+    all.find_all do |obj|
+      obj.state == state_name
+    end
+  end
 
 end
