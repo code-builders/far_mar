@@ -44,7 +44,31 @@ class FarMar::Vendor
     res = products.group_by do |obj|
       obj.vendor_id
     end
-    res[@id]
+    res[id]
+  end
+
+  def sales
+    sales = FarMar::Sale.all
+    res = sales.group_by do |obj|
+      obj.vendor_id
+    end
+    res[id]
+  end
+
+  def revenue
+    all = sales.map do |obj|
+      obj.amount
+    end
+    all.inject(:+)
+  end
+
+  def self.by_market(market_id)
+    all.find_all do |obj|
+      obj.market_id == market_id
+    end
+  end
+
+  def company_size
   end
 
 end
