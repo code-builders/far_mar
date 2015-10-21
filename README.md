@@ -72,8 +72,8 @@ For each of the data classes build the following methods:
 **Unique Vendor Methods**
 
 - `market` - returns the `Market` instance that is associated with this vendor using the `Vendor` `market_id` field
-- `products` - returns a collection of `Product` instances that are associated with market by the `Product` `vendor_id` field.
-- `sales` - returns a collection of `Sale` instances that are associated with market by the `vendor_id` field.
+- `products` - returns a collection of `Product` instances that are associated with the vendor by the `Product` `vendor_id` field.
+- `sales` - returns a collection of `Sale` instances that are associated with the vendor by the `Sale` `vendor_id` field.
 - `revenue` - returns the the sum of all of the vendor's sales (in cents)
 - `self.by_market(market_id)` - returns a list of all `Vendor` objects with a market id that matches the input
 - `company_size` - returns the size of the company using the following rules:
