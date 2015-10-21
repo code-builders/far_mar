@@ -12,64 +12,68 @@ class FarMar::Market#capitalize all names of class
     :zip
 
    def initialize (attrs)
-     @id= attrs[:id]  #use blocks to access the key of the block in line 28
-     @name   = attrs[:name]
-     @address = attrs[:address]
-     @city = attrs[:city]
-     @county= attrs[:county]
-     @state= attrs[:state]
-     @zip = attrs[:zip]
+     @id= attrs[0]  #use blocks to access the key of the block in line 28#syntax to pass something into an has
+     @name   = attrs[1]
+     @address = attrs[2]
+     @city = attrs[3]
+     @county= attrs[4]
+     @state= attrs[5]
+     @zip = attrs[6]
    end
 
 
-   def self.all
-     new_market_array= []
-     a=CSV.read("support/markets.csv")#read the CSV file
-     a.each do |row|
 
+  # returns all rows of the CSV file as objects
 
-       row_info = {
-         id:row [0].to_i,
-         name:  row[1],
-         address: row[2],
-         city: row [3],
-         count: row[4],
-         state: row[5],
-         zip: row[6],
-       }
-       new_market = FarMar::Market.new(row_info)
-       new_market_array << new_market
-     end
-     new_market_array
-     end
-
-#
-  def self.find(id)
-    new_market_object= []
+  def self.all
     a=CSV.read("support/markets.csv")#read the CSV file
-    a.each do |row|
-
-
-      row_info = {
-        id:row [0].to_i,
-        name:  row[1],
-        address: row[2],
-        city: row [3],
-        count: row[4],
-        state: row[5],
-        zip: row[6],
-      }
-
-      if row[0].to_i == id
-        newmarket = FarMar::Market.new(row_info)
-        new_market_object << newmarket
-
-
-      end
-
+    a.collect do |row|
+    FarMar::Market.new (row)
+    # read the markets.csv file
+    # for each row
+    # create a new instance of FarMar::Market
+    # create an array of those instances
+    # return that array
     end
-
-    new_market_object
   end
 
+
+  def self.find(i) #find id
+    a=CSV.read("support/markets.csv")
+    row_match=a.collect do |row|
+    i == row[0]
+    end
+
+    FarMar::Market.new(row_match)
+  end
+
+
+
+
+# vendors - returns a collection of Vendor instances that are associated with the market by the market_id field.
+
+
+
+
+
+
+
+
 end
+#
+#
+#
+#
+#
+#   #
+  # vendors - returns a collection of Vendor instances that are associated with the market by the market_id field.
+#   # find_by_state(state_name) - Returns the first Market object with a state name which matches the input
+#   # find_all_by_state(state_name) - Returns a list of all Market objects with a state name that matches the input
+#
+#
+#
+
+
+
+#
+# vendors - returns a collection of Vendor instances that are associated with the market by the market_id field.
