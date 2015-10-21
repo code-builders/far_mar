@@ -72,13 +72,25 @@ class FarMar::Vendor
   end
 
   def sales
-  # sales - returns a collection of Sale instances that are associated with market by the vendor_id field.
-
+  # sales - returns a collection of Sale instances that are associated with vendor by the vendor_id field.
+    sale_instances = []
+    sale_array = FarMar::Sale.all
+    sale_array.each do |sale|
+      if sale.vendor_id == @id
+        sale_instances << sale
+      end
+    end
+    return sale_instances
   end
 
   def revenue
   # revenue - returns the the sum of all of the vendor's sales (in cents)
-
+    sale_instances = sales
+    total_cost = 0
+    sale_instances.each do |cost|
+      total_cost += cost.amount_in_cents
+    end
+    return total_cost
   end
 
   def self.by_market(market_id)
