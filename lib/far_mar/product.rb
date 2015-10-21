@@ -1,5 +1,5 @@
 ## TO DO
-# -
+# - commit note: .vendor, .sales
 
 require 'csv'
 
@@ -38,9 +38,15 @@ class FarMar::Product
 
   # vendor - returns the Vendor instance that is associated with this vendor using the Product vendor_id field
 
+  def vendor # ret Vendor instance assoc w/ product using vendor_id
+    all_vendors = FarMar::Vendor.all
+    match = all_vendors.find {|v| v.id == self.vendor_id}
+  end
 
-  # sales - returns a collection of Sale instances that are associated with market using the Sale product_id field.
-
+  def sales # ret Sales instances assoc w/ product using Sale product_id
+    all_sales = FarMar::Sale.all
+    match = all_sales.find_all {|s| s.product_id == self.id}
+  end
 
   # number_of_sales - returns the number of times this product has been sold.
 
