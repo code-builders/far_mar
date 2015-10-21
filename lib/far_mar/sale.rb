@@ -14,11 +14,11 @@ class FarMar::Sale
   end
 
   def self.path
-    "/Users/tamarapop/code_builders/projects/far_mar/support/sales.csv"
+    "support/sales.csv"
   end
 
   def self.all
-    CSV.open(path).map do |line|
+    CSV.read(path).map do |line|
       new(
         id:            line[0].to_i,
         amount:        line[1].to_f/100,

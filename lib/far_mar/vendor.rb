@@ -12,11 +12,11 @@ class FarMar::Vendor
   end
 
   def self.path
-    "/Users/tamarapop/code_builders/projects/far_mar/support/vendors.csv"
+    "support/vendors.csv"
   end
 
   def self.all
-    CSV.open(path).map do |line|
+    CSV.read(path).map do |line|
       new(
         id:              line[0].to_i,
         name:            line[1],
@@ -31,4 +31,20 @@ class FarMar::Vendor
       obj.id == id
     end
   end
+
+  def market
+    list = FarMar::Market.all
+    list.find do |obj|
+      obj.id == @market_id
+    end
+  end
+
+  def products
+    products = FarMar::Product.all
+    res = products.group_by do |obj|
+      obj.vendor_id
+    end
+    res[@id]
+  end
+
 end

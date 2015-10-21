@@ -10,15 +10,15 @@ class FarMar::Product
   end
 
   def self.path
-    "/Users/tamarapop/code_builders/projects/far_mar/support/products.csv"
+    "support/products.csv"
   end
 
   def self.all
-    CSV.open(path).map do |line|
+    CSV.read(path).map do |line|
       new(
         id:        line[0].to_i,
         name:      line[1],
-        vendor_id: line[3].to_i
+        vendor_id: line[2].to_i
       )
     end
   end

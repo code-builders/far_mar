@@ -24,13 +24,13 @@ class FarMar::Market
   def self.all
     CSV.read(path).map do |line|
       new(
-        id:        line[0].to_i,
-        name:      line[1],
-        address:   line[2],
-        city:      line[3],
-        county:    line[4],
-        state:     line[5],
-        zip:       line[6]
+        id:      line[0].to_i,
+        name:    line[1],
+        address: line[2],
+        city:    line[3],
+        county:  line[4],
+        state:   line[5],
+        zip:     line[6]
       )
     end
   end
