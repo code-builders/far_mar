@@ -69,6 +69,15 @@ class FarMar::Vendor
   end
 
   def company_size
+    if no_of_employees <= 3
+      "Family Business"
+    elsif no_of_employees >= 4 && no_of_employees <= 15
+      "Small Business"
+    elsif no_of_employees >= 16 && no_of_employees <= 100
+      "Medium Business"
+    else
+      "Big Business"
+    end
   end
 
 end
