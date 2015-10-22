@@ -29,4 +29,29 @@ class FarMar::Product
           obj.id == id                  # find the array with the (argument) for :id
         end                 # return the whole array/line of that argument
     end
+
+    def vendor
+      FarMar::Vendor.all.find do |v|
+        v.id == @vendor_id
+      end
+    end
+
+    def sales
+      sale = FarMar::Sale.all
+      sales_by_product = sale.group_by do |prod|
+        prod.product_id
+      end
+      sales_by_product[@id]
+    end
+
+    def no_of_sales
+      sales.count
+    end
+
+    def self.by_vendor(vendor_id)
+      products = all.group_by do |prod|
+        prod.vendor_id
+      end
+      products[vendor_id]
+    end
 end

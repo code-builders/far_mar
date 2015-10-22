@@ -58,7 +58,7 @@ class FarMar::Vendor
 
     def revenue
       sum = sales.map do |amnt|
-      amnt.amount
+      amnt.amount.to_f / 100
       end
       "$" + sum.reduce(:+).to_s
     end
