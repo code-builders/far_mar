@@ -1,5 +1,5 @@
 # TO DO:
-# - DRY self.find_by_state and self.find_all_by_state
+# - 
 
 # COMMIT NOTES:
 # -
@@ -46,7 +46,7 @@ class FarMar::Market
     # ******
   end
 
-  # CLASS METHOD 2: #ret instance of FarMar::Market matching id passed in 
+  # CLASS METHOD 2: #ret instance of FarMar::Market matching id passed in
   def self.find (id)
     all.find {|m| m.id == id}
 
@@ -57,21 +57,17 @@ class FarMar::Market
   end
 
 ### UNIQUE CLASS METHODS:
-  def vendors # returns all Vendor instances associated with market by market_id
+  def vendors # ret all Vendor instances associated with market by market_id
     all_vendors = FarMar::Vendor.all
     match = all_vendors.find_all {|v| v.market_id == self.id}
-
   end
 
-  def self.find_by_state (state_name)
-      all_markets = self.all
-    all_markets.find {|m| m.state == state_name}
-
+  def self.find_by_state (state_name) # ret first market object in state passed in
+    self.all.find {|m| m.state == state_name}
   end
 
-  def self.find_all_by_state (state_name)
-    all_markets = self.all
-    all_markets.find_all {|m| m.state == state_name}
+  def self.find_all_by_state (state_name) # ret all market objects in state passed in
+    self.all.find_all {|m| m.state == state_name}
   end
 
 end
