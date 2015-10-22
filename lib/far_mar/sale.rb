@@ -21,7 +21,7 @@ class FarMar::Sale
     CSV.read(path).map do |line|
       new(
         id:            line[0].to_i,
-        amount:        line[1].to_f/100,
+        amount:        line[1].to_f,
         purchase_time: line[2],
         vendor_id:     line[3].to_i,
         product_id:    line[4].to_i
@@ -32,6 +32,32 @@ class FarMar::Sale
   def self.find(id)
     all.find do |obj|
       obj.id == id
+    end
+  end
+
+  def vendor
+    ven = FarMar::Vendor.all
+    ven.find do |obj|
+      obj.id == vendor_id
+    end
+  end
+
+  def product
+    pr = FarMar::Product.all
+    pr.find do |obj|
+      obj.id == product_id
+    end
+  end
+
+  def self.by_product(product_id)
+    all.find_all do |obj|
+      obj.product_id == product_id
+    end
+  end
+
+  def self.by_vendor(vendor_id)
+    all.find_all do |obj|
+      obj.vendor_id == vendor_id
     end
   end
 
