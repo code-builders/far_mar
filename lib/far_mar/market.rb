@@ -1,11 +1,10 @@
 # TO DO:
-# - 
+# -
 
 # COMMIT NOTES:
 # -
 
-class FarMar::Market
-
+class FarMar::Market < FarMar::Base
   attr_accessor :id, :name, :address, :city, :county, :state, :zip
 
   def initialize (attrs)
@@ -21,7 +20,7 @@ class FarMar::Market
 ### SHARED CLASS METHODS
   # CLASS METHOD 1
   def self.read_file
-    all_markets = CSV.read("/Users/danieladler/Programming/Code_Builders/ruby_practice/projects/far_mar/support/markets.csv", "r")
+    all_markets = CSV.read("support/markets.csv", "r")
 
     attributes = all_markets.map do |m| # will return array of hashes, each containing all info per market
       { id:       m[0],
@@ -33,28 +32,10 @@ class FarMar::Market
         zip:      m[6]
       }
     end
-
   end
 
-  def self.all # returns array of 500 FarMar::Market objects, each of which contains hash of all CSV data
-    self.read_file.map {|m| FarMar::Market.new(m)}
-
-    # ****** Original code, same output but longer:
-    # all_markets_as_objects = @attributes.map do |m|
-    #   FarMar::Market.new(m)
-    # end
-    # ******
-  end
-
-  # CLASS METHOD 2: #ret instance of FarMar::Market matching id passed in
-  def self.find (id)
-    all.find {|m| m.id == id}
-
-    # ****** Original code:
-    # all_markets = self.all
-    # all_markets.find {|m| m.id.to_i == id.to_i}
-    # ******
-  end
+  # here is where self.all and self.find(id) would go if we were to overwrite the
+  # methods inherited from Base
 
 ### UNIQUE CLASS METHODS:
   def vendors # ret all Vendor instances associated with market by market_id

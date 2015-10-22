@@ -1,10 +1,10 @@
 # TO DO:
-# - 
+# -
 
 # COMMIT NOTES:
 # -
 
-class FarMar::Vendor
+class FarMar::Vendor < FarMar::Base
 
   attr_accessor :id, :name, :no_of_employees, :market_id
 
@@ -17,7 +17,7 @@ class FarMar::Vendor
 
 ### SHARED CLASS METHODS
   def self.read_file
-    all_vendors = CSV.open("/Users/danieladler/Programming/Code_Builders/ruby_practice/projects/far_mar/support/vendors.csv", "r")
+    all_vendors = CSV.open("support/vendors.csv", "r")
 
     attributes = all_vendors.map do |v| # ret arr of hashes, each w/ all info per vendor
       { id:              v[0],
@@ -28,15 +28,8 @@ class FarMar::Vendor
     end
   end
 
-  # CLASS METHOD 1: ret array of 2690 FM::Vendor objects, each containing hash of CSV data
-  def self.all #
-    self.read_file.map {|v| FarMar::Vendor.new(v)}
-  end
-
-  # CLASS METHOD 2: ret instance of FarMar::Market matching id passed in
-  def self.find (id)
-    self.all.find {|v| v.id == id}
-  end
+  # here is where self.all and self.find(id) would go if we were to overwrite the
+  # methods inherited from Base
 
 ### UNIQUE CLASS METHODS:
   def market # ret the Mkt instance assoc w/ vendor via Vendor market_id field
@@ -75,6 +68,17 @@ class FarMar::Vendor
     elsif e > 101
       puts "Big Business"
     end
+  end
+
+  # GOAL: group vendor's sales grouped by hour and day. When do sales peak?
+  def sales_by_hour
+    sales_grouped = self.sales.group_by {|s| s.purchase_time.hour} # => all times of sale, in hash form
+    sales_grouped.map {|h| h[1].size}
+  end
+
+  def sales_by_day
+    sales_grouped = self.sales.group_by {|s| s.purchase_time.day} # => all dates of sale, in hash form
+    sales_grouped.map {|h| h[1].size}
   end
 
 end

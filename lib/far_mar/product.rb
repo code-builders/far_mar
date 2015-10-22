@@ -3,7 +3,7 @@
 ##COMMIT NOTES:
 # -
 
-class FarMar::Product
+class FarMar::Product < FarMar::Base
 
   attr_accessor :id, :name, :vendor_id
 
@@ -15,7 +15,7 @@ class FarMar::Product
 
 ### SHARED CLASS METHODS
   def self.read_file
-    all_products = CSV.read("/Users/danieladler/Programming/Code_Builders/ruby_practice/projects/far_mar/support/products.csv", "r")
+    all_products = CSV.read("support/products.csv", "r")
 
     attributes = all_products.map do |pr| # ret array of hashes, each containing all info per market
       { id:       pr[0],
@@ -25,13 +25,8 @@ class FarMar::Product
     end
   end
 
-  def self.all
-    self.read_file.map {|pr| FarMar::Product.new(pr)}
-  end
-
-  def self.find (id)
-    all.find {|pr| pr.id == id}
-  end
+  # here is where self.all and self.find(id) would go if we were to overwrite the
+  # methods inherited from Base
 
 ### UNIQUE CLASS METHODS:
   def vendor # ret Vendor instance assoc w/ product using vendor_id
