@@ -2,7 +2,7 @@
 # - DRY self.find_by_state and self.find_all_by_state
 
 # COMMIT NOTES:
-# - 
+# -
 
 require 'csv'
 
@@ -60,23 +60,6 @@ class FarMar::Market
 
 ### UNIQUE CLASS METHODS:
   def vendors # returns all Vendor instances associated with market by market_id
-    # THOUGHT PROCESS:
-      # puts "self class and name"
-      # puts self.class                         # what IS self at this scope?
-      # puts self.name
-      # puts "self.id (market id)"
-      # puts self.id
-      # puts "random vendor from Vendor class"
-      # puts random = FarMar::Vendor.all.sample
-      # puts "name and mkt id of random vendor from Vendor class"
-      # puts random.name
-      # puts random.market_id
-      # puts "look up all vendors with market_id == 100"
-      #      all_vendors = FarMar::Vendor.all
-      #      match = all_vendors.find_all {|v| v.market_id == 100}
-      # puts "names of vendors with market id == 100"
-      # puts match.each {|v| puts v.name}
-
     all_vendors = FarMar::Vendor.all
     match = all_vendors.find_all {|v| v.market_id == self.id}
 

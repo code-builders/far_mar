@@ -1,17 +1,13 @@
 # TO DO:
-# - get .revenue method working
-# - clarify self.by_market method with BW. What should it return?
 # - DRY: add .read_file class method, refactor .all, .find to use .read_file
+# - refactor .market method - seems like it could be shorter
 
 # COMMIT NOTES:
-# -
+# - .revenue method for Vendor class, fixed @amount attr for Sale class to integer, cleaned up debug notes
 
 require 'csv'
 
 class FarMar::Vendor
-
-  # Each vendor belongs to a market, the market_id field relates to the
-  # Market ID field. Each vendor has many products they sell.
 
   attr_accessor :id, :name, :no_of_employees, :market_id
 
@@ -37,7 +33,7 @@ class FarMar::Vendor
   # DRY: Add self.read_file method here
 
   # CLASS METHOD 1
-  def self.all # returns array of #2690 FarMar::Vendor objects, each of which contains hash of all CSV data
+  def self.all # ret array of 2690 FM::Vendor objects, each containing hash of CSV data
     all_vendors_as_objects = @attributes.map do |v|
       FarMar::Vendor.new(v)
     end
@@ -49,10 +45,8 @@ class FarMar::Vendor
     all_vendors.find {|v| v.id.to_i == id.to_i}
   end
 
-
 ### UNIQUE CLASS METHODS:
-  # market - returns the Market instance that is associated with this vendor using the Vendor market_id field
-  def market
+  def market # ret Mkt instance assoc w/ vendor via Vendor market_id field
     v = self                          # => self = instance of Vendor class
     @i = v.market_id                  # => mkt id of Vendor instance
     all_markets = FarMar::Market.all  # => all Market objects
@@ -70,28 +64,18 @@ class FarMar::Vendor
     match = all_sales.find_all {|s| s.vendor_id == self.id}
   end
 
-  #don't think this needs .self in method name-- it's an instance method b/c on specific vendor instance
   def revenue #ret sum of all vendor's sales (in cents)
-    # puts "self when this far into .revenue method:"
-    # puts self.class # => FM::Vendor
-    # all_sales = []
-    # sum = []
-    # self.sales.each {|s| all_sales << s.amount} # => here, self is this instance of Vendor
-    # sum = all_sales.each {|a| sum += a}
-    # puts sum
-
+    all_sales_array = self.sales.map {|s| s.amount}
+    all_sales_array.inject{|sum,x| sum + x }
   end
 
-  # self.by_market(market_id) - returns a list of all Vendor objects with a market id that matches the input
-  ## What does BW mean here? only one vendor object will result from this search, so not sure what 'all vendor objects' means
-  def self.by_market(market_id)
+  def self.by_market(market_id) # ret all Vendors within a market, via market id
     all_vendors = self.all
     all_vendors.find_all {|v| v.market_id.to_i == market_id}
   end
 
-  def company_size # can only call this on instance created by `sample = FM::V.by_market(`mkt_id`)`. will this do?
-    e = self.employees.to_i
-
+  def company_size
+    e = self.no_of_employees
     if    e >= 1  && e <= 3
       puts "Family Business"
     elsif e >= 4  && e <= 15
@@ -101,7 +85,6 @@ class FarMar::Vendor
     elsif e > 101
       puts "Big Business"
     end
-
   end
 
 end

@@ -1,5 +1,7 @@
-## TO DO
-# - commit note: 
+## TO DO:
+
+##COMMIT NOTES:
+# -
 
 require 'csv'
 
@@ -34,7 +36,6 @@ class FarMar::Product
   end
 
 ### UNIQUE CLASS METHODS:
-
   def vendor # ret Vendor instance assoc w/ product using vendor_id
     all_vendors = FarMar::Vendor.all
     match = all_vendors.find {|v| v.id == self.vendor_id}
