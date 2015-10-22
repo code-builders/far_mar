@@ -88,7 +88,7 @@ class FarMar::Vendor
     sale_instances = sales
     total_cost = 0
     sale_instances.each do |cost|
-      total_cost += cost.amount_in_cents
+      total_cost += cost.amount
     end
     return total_cost
   end
