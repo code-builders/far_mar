@@ -1,16 +1,17 @@
 require 'csv'
+require 'time'
 
 class FarMar::Sale
 
   attr_reader :id,
-              :amount_in_cents,
+              :amount,
               :purchase_time,
               :vendor_id,
               :product_id
 
     def initialize(attrs)
       @id               = attrs[:id]
-      @amount_in_cents  = attrs[:amount_in_cents]
+      @amount           = attrs[:amount]
       @purchase_time    = attrs[:purchase_time]
       @vendor_id        = attrs[:vendor_id]
       @product_id       = attrs[:product_id]
@@ -25,8 +26,8 @@ class FarMar::Sale
       # loop through all attributes of sale
       sale_info = {
         id:               sale[0].to_i,
-        amount_in_cents:  sale[1].to_i,
-        purchase_time:    sale[2],
+        amount:           sale[1].to_i,
+        purchase_time:    Time.parse(sale[2]),
         vendor_id:        sale[3].to_i,
         product_id:       sale[4].to_i
       }
@@ -44,8 +45,8 @@ class FarMar::Sale
     sale_array.each do |sale|
       sale_info = {
         id:               sale[0].to_i,
-        amount_in_cents:  sale[1].to_i,
-        purchase_time:    sale[2],
+        amount:           sale[1].to_i,
+        purchase_time:    Time.parse(sale[2]),
         vendor_id:        sale[3].to_i,
         product_id:       sale[4].to_i
       }
@@ -67,19 +68,22 @@ class FarMar::Sale
     FarMar::Product.find(@product_id)
   end
 
-  def self. between(beginning_time, end_time)
+  def self.between(beginning_time, end_time)
     # self.between(beginning_time, end_time) - returns a collection of Sale objects where the purchase time is between the two times given as arguments
-
+    all_sales = FarMar::Sale.all
+    all_sales.find_all {|sale| sale.purchase_time > beginning_time && sale.purchase_time < end_time}
   end
 
   def self.by_product(product_id)
     # self.by_product(product_id) - returns an Array of Sale objects with a product_id matching the argument.
-
+    all_sales = FarMar::Sale.all
+    all_sales.find_all {|sale| sale.product_id == product_id}
   end
 
   def self.by_vendor(vendor_id)
     # self.by_vendor(vendor_id) - returns an Array of Sale objects with a vendor_id matching the argument.
-
+    all_sales = FarMar::Sale.all
+    all_sales.find_all {|sale| sale.vendor_id == vendor_id}
   end
 
 end
