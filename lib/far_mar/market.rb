@@ -56,6 +56,22 @@ class FarMar::Market#capitalize all names of class
 # still an Array, but now it’s a `FarMar::Market`, so array syntax
 # doesn’t work anymore.Instead of `x[1]`, you would use `x.name`.
 
+# Returns the first Market object with a state name which matches the input
+def self.find_by_state(state_name)
+  all.find do |x|
+    state_name == x.state
+  end
+end
+
+# Returns a list of all Market objects with a state name that matches the input
+def self.find_all_by_state(state_name)
+  all.find_all do |x|
+  state_name == x.state
+  end
+end
+
+
+
 
 #read file method
   def self.read_file
