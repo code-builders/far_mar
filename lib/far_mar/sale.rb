@@ -3,6 +3,8 @@ require 'time'
 
 class FarMar::Sale
 
+  SALE_ARRAY = CSV.read("support/sales.csv")
+
   attr_reader :id,
               :amount,
               :purchase_time,
@@ -10,26 +12,26 @@ class FarMar::Sale
               :product_id
 
     def initialize(attrs)
-      @id               = attrs[:id]
-      @amount           = attrs[:amount]
-      @purchase_time    = attrs[:purchase_time]
-      @vendor_id        = attrs[:vendor_id]
-      @product_id       = attrs[:product_id]
+      @id               = attrs[:id].to_i
+      @amount           = attrs[:amount].to_i
+      @purchase_time    = Time.parse(attrs[:purchase_time])
+      @vendor_id        = attrs[:vendor_id].to_i
+      @product_id       = attrs[:product_id].to_i
     end
 
   def self.all
     # self.all - returns all rows of the CSV file as objects
     new_sale_array = []
     # reads sales.csv file
-    sale_array = CSV.read("support/sales.csv")
-    sale_array.each do |sale|
+    # sale_array = CSV.read("support/sales.csv")
+    SALE_ARRAY.each do |sale|
       # loop through all attributes of sale
       sale_info = {
-        id:               sale[0].to_i,
-        amount:           sale[1].to_i,
-        purchase_time:    Time.parse(sale[2]),
-        vendor_id:        sale[3].to_i,
-        product_id:       sale[4].to_i
+        id:               sale[0],
+        amount:           sale[1],
+        purchase_time:    sale[2],
+        vendor_id:        sale[3],
+        product_id:       sale[4]
       }
       # create new sale object
       new_sale = FarMar::Sale.new(sale_info)
@@ -41,14 +43,14 @@ class FarMar::Sale
 
   def self.find(id)
     # self.find(id) - returns the row where the ID field matches the argument
-    sale_array = CSV.read("support/sales.csv")
-    sale_array.each do |sale|
+    # sale_array = CSV.read("support/sales.csv")
+    SALE_ARRAY.each do |sale|
       sale_info = {
-        id:               sale[0].to_i,
-        amount:           sale[1].to_i,
-        purchase_time:    Time.parse(sale[2]),
-        vendor_id:        sale[3].to_i,
-        product_id:       sale[4].to_i
+        id:               sale[0],
+        amount:           sale[1],
+        purchase_time:    sale[2],
+        vendor_id:        sale[3],
+        product_id:       sale[4]
       }
       if sale[0].to_i == id
         new_sale = FarMar::Sale.new(sale_info)
