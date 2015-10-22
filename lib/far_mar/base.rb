@@ -1,0 +1,4 @@
+class FarMar::Base
+
+
+end
