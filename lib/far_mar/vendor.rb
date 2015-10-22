@@ -59,7 +59,7 @@ class FarMar::Vendor
     all = sales.map do |obj|
       obj.amount
     end
-    all.inject(:+)
+    all.inject(:+)/100
   end
 
   def self.by_market(market_id)
