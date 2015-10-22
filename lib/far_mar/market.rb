@@ -24,7 +24,7 @@ class FarMar::Market
         city: attrs[3],
         county: attrs[4],
         state: attrs[5],
-        zip: attrs[6]
+        zip: attrs[6].to_i
       }
       m = FarMar::Market.new(mkts)
     end
@@ -36,16 +36,17 @@ class FarMar::Market
     markets.find do |f|
       f.id.to_i == id.to_i
     end
+
   end
 
   def vendors
     vendors = CSV.open("/Users/khambro/CodeBuilders/far_mar/support/vendors.csv", "r")
     all_vendors = vendors.read.collect do |attrs|
       vend = {
-        id: attrs[0],
+        id: attrs[0].to_i,
         name: attrs[1],
-        num_employees: attrs[2],
-        market_id: attrs[3]
+        no_of_employees: attrs[2].to_i,
+        market_id: attrs[3].to_i
       }
      v = FarMar::Vendor.new(vend)
     end
@@ -71,15 +72,6 @@ class FarMar::Market
     end
   end
 
-
-
-
-
-
-#find_by_state(state_name) - Returns the first Market object with a state name which matches the input
-
-
-  #  )
   #set attr _accessors for the class
   #read csv file and separate each row
   #initialize each instance of the market requiring hash of attrs
