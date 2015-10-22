@@ -1,6 +1,8 @@
 ## TO DO
+# -get .self.between method working
 # -make sure formatting (.to_i, .to_f, etc.) is correct in initialize, esp for $ (cents)
-# -commit: 
+# -refactor time formatting w/ .strftime for better readability
+# -commit: Sale class @purchase_time variable converted from string to Time, Sale class 100% pass rspec
 
 require 'csv'
 
@@ -14,7 +16,7 @@ class FarMar::Sale
   def initialize (attrs)
     @id             = attrs[:id].to_i
     @amount         = attrs[:amount].to_f # + /100 to end? needs to be in cents
-    @purchase_time  = attrs[:purchase_time] # not sure how to format
+    @purchase_time  = Time.parse(attrs[:purchase_time]) # => add .strftime later
     @vendor_id      = attrs[:vendor_id].to_i
     @product_id     = attrs[:product_id].to_i
 
@@ -55,9 +57,10 @@ class FarMar::Sale
     match = all_products.find {|pr| pr.id == self.product_id}
   end
 
-  # self.between(beginning_time, end_time) - returns a collection of Sale objects where the purchase time is between the two times given as arguments
-  def self.between(beginning_time, end_time)
-    # TBD!!
+  # self.between(beginning_time, end_time) - returns a collection of Sale objects where
+  # the purchase time is between the two times given as arguments
+  def self.between #(beginning_time, end_time)
+
   end
 
   def self.by_product(product_id) # => ret all sales of product X

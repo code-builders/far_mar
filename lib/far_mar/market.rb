@@ -2,7 +2,7 @@
 # - DRY self.find_by_state and self.find_all_by_state
 
 # COMMIT NOTES:
-# - added .vendors method for Market class
+# - 
 
 require 'csv'
 
