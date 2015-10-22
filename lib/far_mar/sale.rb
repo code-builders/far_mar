@@ -1,3 +1,4 @@
+require 'time'
 class FarMar::Sale
   attr_accessor :id,
                 :amount,
@@ -22,7 +23,7 @@ class FarMar::Sale
       new(
         id:            line[0].to_i,
         amount:        line[1].to_f,
-        purchase_time: line[2],
+        purchase_time: Time.parse(line[2]),
         vendor_id:     line[3].to_i,
         product_id:    line[4].to_i
       )
@@ -47,6 +48,16 @@ class FarMar::Sale
     pr.find do |obj|
       obj.id == product_id
     end
+  end
+
+  def self.between(beginning_time, end_time)
+    all.find_all do |obj|
+      beginning_time >= obj.purchase_time && end_time <= obj.purchase_time
+    end
+  end
+
+  def day
+    purchase_time.day
   end
 
   def self.by_product(product_id)
