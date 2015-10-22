@@ -28,8 +28,12 @@ class FarMar::Vendor
     all_markets = markets.group_by do |obj|
       obj.id
     end
-    all_markets[@id]
+    all_markets[@id].first
   end
+
+#  ) FarMar::Vendor associations market_id matches the markets id
+#     Failure/Error: expect(vendor.market.id).to eq vendor.market_id
+ #undefined method `id' for #<Array:0x007ff3928e2f78>
 
   def products
     products = FarMar::Product.all

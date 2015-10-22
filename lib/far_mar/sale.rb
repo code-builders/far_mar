@@ -29,7 +29,7 @@ class FarMar::Sale
     all_vendors = vendors.group_by do |obj|
       obj.id
     end
-    all_vendors[@vendor_id]
+    all_vendors[@vendor_id].first
   end
 
   def product
@@ -37,7 +37,7 @@ class FarMar::Sale
     all_products = products.group_by do |obj|
       obj.id
     end
-    all_products[@product_id]
+    all_products[@product_id].first
   end
 
   def self.by_product(product_id)
