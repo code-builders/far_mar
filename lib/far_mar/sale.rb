@@ -1,8 +1,8 @@
 ## TO DO
-# -get .self.between method working
 # -make sure formatting (.to_i, .to_f, etc.) is correct in initialize, esp for $ (cents)
 # -refactor time formatting w/ .strftime for better readability
-# -commit: Sale class @purchase_time variable converted from string to Time, Sale class 100% pass rspec
+# -refactor self.between method for more user_friendly input (not assign variables, use Time.parse)
+# -commit: Sale class .between method (assuming user assigns beg_ and end_time variables using Time.parse)
 
 require 'csv'
 
@@ -57,10 +57,10 @@ class FarMar::Sale
     match = all_products.find {|pr| pr.id == self.product_id}
   end
 
-  # self.between(beginning_time, end_time) - returns a collection of Sale objects where
-  # the purchase time is between the two times given as arguments
-  def self.between #(beginning_time, end_time)
-
+  def self.between(beginning_time, end_time) # ret all Sales where purchase time is bt 2 times given as arguments
+    # may need to reformat b_t and e_t to make searching easier
+    all_sales = self.all
+    all_sales.find_all {|s| s.purchase_time >= beginning_time && s.purchase_time <= end_time}
   end
 
   def self.by_product(product_id) # => ret all sales of product X
