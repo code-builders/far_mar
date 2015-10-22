@@ -28,7 +28,7 @@ class FarMar::Market
   end
 
 
-  def vendor
+  def vendors
     vendors = FarMar::Vendor.all
     all_vendors = vendors.group_by do |obj|
       obj.market_id

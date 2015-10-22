@@ -11,63 +11,50 @@ class FarMar::Sale
     @product_id     = attrs[4].to_i
   end
 
-    def self.all
-      sales = CSV.open("/Users/khambro/CodeBuilders/far_mar/support/sales.csv", "r")
-      sales.read.collect do |attrs|
-        self.new(attrs)
-      end
+  def self.all
+    sales = CSV.open("/Users/khambro/CodeBuilders/far_mar/support/sales.csv", "r")
+    sales.read.collect do |attrs|
+      self.new(attrs)
     end
+  end
 
-    def self.find(id)
-      id= id.to_i
-      sales = self.all
-      sales.find do |f|
-        f.id.to_i == id.to_i
-      end
+  def self.find(id)
+    self.all.find do |f|
+      f.id == id
     end
+  end
 
-    def vendor
-      vendors = CSV.open("/Users/khambro/CodeBuilders/far_mar/support/vendors.csv", "r")
-      all_vendors = vendors.read.collect do |attrs|
-        vend = {
-          id: attrs[0].to_i,
-          name: attrs[1],
-          no_of_employees: attrs[2].to_i,
-          market_id: attrs[3].to_i
-        }
-      FarMar::Vendor.new(vend)
-      end
-      all_vendors.find_all do |f|
-        f.id.to_i == self.vendor_id.to_i
-      end
+  def vendor
+    vendors = FarMar::Vendor.all
+    all_vendors = vendors.group_by do |obj|
+      obj.id
     end
+    all_vendors[@vendor_id]
+  end
 
-    def product
-      products = CSV.open("/Users/khambro/CodeBuilders/far_mar/support/products.csv", "r")
-      all_products = products.read.collect do |attrs|
-        pdts = {
-          id: attrs[0].to_i,
-          name: attrs[1],
-          vendor_id: attrs[2].to_i
-        }
-        FarMar::Product.new(pdts)
-      end
-      all_products.find_all do |f|
-        f.id.to_i == self.product_id.to_i
-      end
+  def product
+    products = FarMar::Product.all
+    all_products = products.group_by do |obj|
+      obj.id
     end
+    all_products[@product_id]
+  end
 
-    def self.by_product(product_id)
-      all.find_all do |f|
-        f.product_id.to_i == product_id.to_i
-      end
+  def self.by_product(product_id)
+    all_sale = self.all.group_by do |obj|
+      obj.product_id
     end
+    all_sale[product_id]
+  end
 
-    def self.by_vendor(vendor_id)
-      all.find_all do |f|
-        f.vendor_id.to_i == vendor_id.to_i
-      end
+
+  def self.by_vendor(vendor_id)
+    all_sale = self.all.group_by do |obj|
+      obj.vendor_id
     end
+    all_sale[vendor_id]
+  end
+
 
 #self.between(beginning_time, end_time) - returns a collection of Sale objects where the purchase time is between the two times given as arguments
 
