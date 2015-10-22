@@ -1,5 +1,6 @@
 ## TO DO
-# -make sure formatting (.to_i, .to_f, etc.) is correct in initialize
+# -make sure formatting (.to_i, .to_f, etc.) is correct in initialize, esp for $ (cents)
+# -commit: 
 
 require 'csv'
 
@@ -44,21 +45,29 @@ class FarMar::Sale
 
 ### UNIQUE CLASS METHODS:
 
-  # vendor - returns the Vendor instance that is associated with this sale using the Sale vendor_id field
+  def vendor # ret Vendor instance assoc w/ this sale via Sale vendor_id
+    all_vendors = FarMar::Vendor.all
+    match = all_vendors.find {|v| v.id == self.vendor_id}
+  end
 
-
-  # product - returns the Product instance that is associated with this sale using the Sale product_id field
-
+  def product # ret Product instance assoc w/ this sale via Sale product_id
+    all_products = FarMar::Product.all
+    match = all_products.find {|pr| pr.id == self.product_id}
+  end
 
   # self.between(beginning_time, end_time) - returns a collection of Sale objects where the purchase time is between the two times given as arguments
+  def self.between(beginning_time, end_time)
+    # TBD!!
+  end
 
+  def self.by_product(product_id) # => ret all sales of product X
+    all_sales = self.all
+    all_sales.find_all {|s| s.product_id == product_id}
+  end
 
-  # self.by_product(product_id) - returns an Array of Sale objects with a product_id matching the argument.
-
-
-  # self.by_vendor(vendor_id) - returns an Array of Sale objects with a vendor_id matching the argument.
-
-
-
+  def self.by_vendor(vendor_id) # ret all sales by vendor X
+    all_sales = self.all
+    all_sales.find_all {|s| s.vendor_id == vendor_id}
+  end
 
 end
