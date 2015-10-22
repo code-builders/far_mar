@@ -1,4 +1,4 @@
-class FarMar::Market
+class FarMar::Market < FarMar::Base
   attr_accessor :id,
                 :name,
                 :address,
@@ -8,37 +8,17 @@ class FarMar::Market
                 :zip
 
   def initialize(attrs)
-    @id      = attrs[:id]
-    @name    = attrs[:name]
-    @address = attrs[:address]
-    @city    = attrs[:city]
-    @county  = attrs[:county]
-    @state   = attrs[:state]
-    @zip     = attrs[:zip]
+    @id      = attrs[0].to_i
+    @name    = attrs[1]
+    @address = attrs[2]
+    @city    = attrs[3]
+    @county  = attrs[4]
+    @state   = attrs[5]
+    @zip     = attrs[6]
   end
 
   def self.path
     "support/markets.csv"
-  end
-
-  def self.all
-    CSV.read(path).map do |line|
-      new(
-        id:      line[0].to_i,
-        name:    line[1],
-        address: line[2],
-        city:    line[3],
-        county:  line[4],
-        state:   line[5],
-        zip:     line[6]
-      )
-    end
-  end
-
-  def self.find(id)
-    all.find do |obj|
-      obj.id == id
-    end
   end
 
   def vendors

@@ -56,10 +56,6 @@ class FarMar::Sale
     end
   end
 
-  def day
-    purchase_time.day
-  end
-
   def self.by_product(product_id)
     all.find_all do |obj|
       obj.product_id == product_id
