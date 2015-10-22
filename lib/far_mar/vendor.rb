@@ -1,5 +1,5 @@
 # TO DO:
-# - refactor .market method - seems like it could be shorter
+# - 
 
 # COMMIT NOTES:
 # -
@@ -17,9 +17,9 @@ class FarMar::Vendor
 
 ### SHARED CLASS METHODS
   def self.read_file
-    @all_vendors = CSV.open("/Users/danieladler/Programming/Code_Builders/ruby_practice/projects/far_mar/support/vendors.csv", "r")
+    all_vendors = CSV.open("/Users/danieladler/Programming/Code_Builders/ruby_practice/projects/far_mar/support/vendors.csv", "r")
 
-    @attributes = @all_vendors.map do |v| # will return array of hashes, each containing all info per vendor
+    attributes = all_vendors.map do |v| # ret arr of hashes, each w/ all info per vendor
       { id:              v[0],
         name:            v[1],
         no_of_employees: v[2],
@@ -39,20 +39,17 @@ class FarMar::Vendor
   end
 
 ### UNIQUE CLASS METHODS:
-  def market # ret Mkt instance assoc w/ vendor via Vendor market_id field
-    v = self                          # => self = instance of Vendor class
-    @i = v.market_id                  # => mkt id of Vendor instance
-    all_markets = FarMar::Market.all  # => all Market objects
-    match = all_markets.find {|m| m.id == @i} # => id of Market object matches mkt_id of Vendor
+  def market # ret the Mkt instance assoc w/ vendor via Vendor market_id field
+    all_markets = FarMar::Market.all
+    match = all_markets.find {|m| m.id == self.market_id}
   end
 
-  def products #ret. Product instances assoc w/ vendor by the Product vendor_id field.
+  def products #ret Product instances assoc w/ vendor by the Product vendor_id field.
     all_products = FarMar::Product.all
     match = all_products.find_all {|p| p.vendor_id == self.id}
   end
 
-
-  def sales #ret. Sale instances assoc w/ vendor by vendor_id field.
+  def sales #ret Sale instances assoc w/ vendor by vendor_id field.
     all_sales = FarMar::Sale.all
     match = all_sales.find_all {|s| s.vendor_id == self.id}
   end
