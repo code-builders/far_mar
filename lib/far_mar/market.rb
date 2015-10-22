@@ -1,7 +1,7 @@
 #lib/far_mar/market.rb
 require 'csv'
 
-class FarMar::Market#capitalize all names of class
+class FarMar::Market < FarMar::Vendor#capitalize all names of class
   attr_accessor :id, :name, :address, :city, :county, :state, :zip
 
    def initialize(attrs)
@@ -31,10 +31,10 @@ class FarMar::Market#capitalize all names of class
     end
   end
 
-
-  def self.find(i) #find id
+# self.find(id) - returns the row where the ID field matches the argument
+  def self.find(id) #find id
     row_match=read_file.find do |row|
-    i== row[0].to_i
+    id== row[0].to_i
     end
     # read the csv file of markets
     # for each row
@@ -75,6 +75,7 @@ end
 
 # vendors - returns a collection of Vendor instances that are associated with the market by the market_id field.
 def self.vendors(vendors)
+vendors.by_market
   #retrieve market id
   #get market id from Vendor classfile
   #match up market id and vendor id
