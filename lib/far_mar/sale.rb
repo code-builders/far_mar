@@ -19,16 +19,12 @@ class FarMar::Sale < FarMar::Base
 
   def vendor
     ven = FarMar::Vendor.all
-    ven.find do |obj|
-      obj.id == vendor_id
-    end
+    ven.find { |obj| obj.id == vendor_id }
   end
 
   def product
     pr = FarMar::Product.all
-    pr.find do |obj|
-      obj.id == product_id
-    end
+    pr.find { |obj| obj.id == product_id }
   end
 
   def self.between(beginning_time, end_time)

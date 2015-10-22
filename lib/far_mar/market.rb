@@ -23,22 +23,16 @@ class FarMar::Market < FarMar::Base
 
   def vendors
     list = FarMar::Vendor.all
-    ans = list.group_by do |obj|
-      obj.market_id
-    end
+    ans = list.group_by { |obj| obj.market_id }
     ans[id]
   end
 
   def self.find_by_state(state_name)
-    all.find do |obj|
-      obj.state == state_name
-    end
+    all.find { |obj| obj.state == state_name }
   end
 
   def self.find_all_by_state(state_name)
-    all.find_all do |obj|
-      obj.state == state_name
-    end
+    all.find_all { |obj| obj.state == state_name }
   end
 
 end

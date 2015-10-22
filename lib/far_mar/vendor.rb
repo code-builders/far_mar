@@ -17,38 +17,28 @@ class FarMar::Vendor < FarMar::Base
 
   def market
     list = FarMar::Market.all
-    list.find do |obj|
-      obj.id == @market_id
-    end
+    list.find { |obj| obj.id == @market_id }
   end
 
   def products
     products = FarMar::Product.all
-    res = products.group_by do |obj|
-      obj.vendor_id
-    end
+    res = products.group_by { |obj| obj.vendor_id }
     res[id]
   end
 
   def sales
     sales = FarMar::Sale.all
-    res = sales.group_by do |obj|
-      obj.vendor_id
-    end
+    res = sales.group_by { |obj| obj.vendor_id }
     res[id]
   end
 
   def revenue
-    all = sales.map do |obj|
-      obj.amount
-    end
+    all = sales.map { |obj| obj.amount }
     all.inject(:+)/100
   end
 
   def self.by_market(market_id)
-    all.find_all do |obj|
-      obj.market_id == market_id
-    end
+    all.find_all { |obj| obj.market_id == market_id }
   end
 
   def company_size

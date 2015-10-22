@@ -15,16 +15,12 @@ class FarMar::Product < FarMar::Base
 
   def vendor
     ven = FarMar::Vendor.all
-    ven.find do |obj|
-      obj.id == vendor_id
-    end
+    ven.find { |obj| obj.id == vendor_id }
   end
 
   def sales
     sale = FarMar::Sale.all
-    sale.find_all do |obj|
-      obj.product_id == id
-    end
+    sale.find_all { |obj| obj.product_id == id }
   end
 
   def number_of_sales
@@ -32,9 +28,7 @@ class FarMar::Product < FarMar::Base
   end
 
   def self.by_vendor(vendor_id)
-    all.find_all do |obj|
-      obj.vendor_id == vendor_id
-    end
+    all.find_all { |obj| obj.vendor_id == vendor_id }
   end
 
 end
