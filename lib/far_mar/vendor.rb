@@ -1,11 +1,8 @@
 # TO DO:
-# - DRY: add .read_file class method, refactor .all, .find to use .read_file
 # - refactor .market method - seems like it could be shorter
 
 # COMMIT NOTES:
-# - .revenue method for Vendor class, fixed @amount attr for Sale class to integer, cleaned up debug notes
-
-require 'csv'
+# -
 
 class FarMar::Vendor
 
@@ -18,31 +15,27 @@ class FarMar::Vendor
     @market_id        = attrs[:market_id].to_i
   end
 
-### CLASS VARIABLES:
-  @all_vendors = CSV.open("/Users/danieladler/Programming/Code_Builders/ruby_practice/projects/far_mar/support/vendors.csv", "r")
-
-  @attributes = @all_vendors.map do |v| # will return array of hashes, each containing all info per vendor
-    { id:              v[0],
-      name:            v[1],
-      no_of_employees: v[2],
-      market_id:       v[3]
-    }
-  end
-
 ### SHARED CLASS METHODS
-  # DRY: Add self.read_file method here
+  def self.read_file
+    @all_vendors = CSV.open("/Users/danieladler/Programming/Code_Builders/ruby_practice/projects/far_mar/support/vendors.csv", "r")
 
-  # CLASS METHOD 1
-  def self.all # ret array of 2690 FM::Vendor objects, each containing hash of CSV data
-    all_vendors_as_objects = @attributes.map do |v|
-      FarMar::Vendor.new(v)
+    @attributes = @all_vendors.map do |v| # will return array of hashes, each containing all info per vendor
+      { id:              v[0],
+        name:            v[1],
+        no_of_employees: v[2],
+        market_id:       v[3]
+      }
     end
   end
 
-  # CLASS METHOD 2:
+  # CLASS METHOD 1: ret array of 2690 FM::Vendor objects, each containing hash of CSV data
+  def self.all #
+    self.read_file.map {|v| FarMar::Vendor.new(v)}
+  end
+
+  # CLASS METHOD 2: ret instance of FarMar::Market matching id passed in
   def self.find (id)
-    all_vendors = self.all
-    all_vendors.find {|v| v.id.to_i == id.to_i}
+    self.all.find {|v| v.id == id}
   end
 
 ### UNIQUE CLASS METHODS:

@@ -4,8 +4,6 @@
 # COMMIT NOTES:
 # -
 
-require 'csv'
-
 class FarMar::Market
 
   attr_accessor :id, :name, :address, :city, :county, :state, :zip
@@ -48,7 +46,7 @@ class FarMar::Market
     # ******
   end
 
-  # CLASS METHOD 2: #returns instance of FarMar::Market object matching id passed in when calling method
+  # CLASS METHOD 2: #ret instance of FarMar::Market matching id passed in 
   def self.find (id)
     all.find {|m| m.id == id}
 

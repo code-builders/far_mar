@@ -5,8 +5,6 @@
 ##COMMIT NOTES:
 # -
 
-require 'csv'
-
 class FarMar::Sale
 
   attr_accessor :id, :amount, :purchase_time, :vendor_id, :product_id

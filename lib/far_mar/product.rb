@@ -3,8 +3,6 @@
 ##COMMIT NOTES:
 # -
 
-require 'csv'
-
 class FarMar::Product
 
   attr_accessor :id, :name, :vendor_id
