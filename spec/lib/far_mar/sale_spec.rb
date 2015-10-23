@@ -17,7 +17,8 @@ describe FarMar::Sale do
     it "return sale between beginning and end time" do
       beginning_time = Time.parse("2013-11-12 02:03:31 -0800")
       end_time       = Time.parse("2013-11-12 02:03:32 -0800")
-      expect(FarMar::Sale.between(beginning_time,end_time)[0].id).to eq 12001
+      result         = FarMar::Sale.between(beginning_time,end_time)
+      expect(result[0].id).to eq 12001
     end
   end
 
