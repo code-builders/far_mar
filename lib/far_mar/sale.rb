@@ -19,7 +19,7 @@ class FarMar::Sale < FarMar::Base
 
   def self.between(beginning_time, end_time)
     all.find_all do |obj|
-      beginning_time >= obj.purchase_time && end_time <= obj.purchase_time
+      obj.purchase_time >= beginning_time && obj.purchase_time <= end_time
     end
   end
 

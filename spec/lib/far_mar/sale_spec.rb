@@ -13,6 +13,12 @@ describe FarMar::Sale do
     it "responds to 'find'" do
       expect(FarMar::Sale).to respond_to :find
     end
+
+    it "return sale between beginning and end time" do
+      beginning_time = Time.parse("2013-11-12 02:03:31 -0800")
+      end_time       = Time.parse("2013-11-12 02:03:32 -0800")
+      expect(FarMar::Sale.between(beginning_time,end_time)[0].id).to eq 12001
+    end
   end
 
   describe "attributes" do
