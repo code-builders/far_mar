@@ -17,16 +17,6 @@ class FarMar::Sale < FarMar::Base
     "support/sales.csv"
   end
 
-  def vendor
-    ven = FarMar::Vendor.all
-    ven.find { |obj| obj.id == vendor_id }
-  end
-
-  def product
-    pr = FarMar::Product.all
-    pr.find { |obj| obj.id == product_id }
-  end
-
   def self.between(beginning_time, end_time)
     all.find_all do |obj|
       beginning_time >= obj.purchase_time && end_time <= obj.purchase_time
@@ -43,6 +33,16 @@ class FarMar::Sale < FarMar::Base
     all.find_all do |obj|
       obj.vendor_id == vendor_id
     end
+  end
+
+  def vendor
+    ven = FarMar::Vendor.all
+    ven.find { |obj| obj.id == vendor_id }
+  end
+
+  def product
+    pr = FarMar::Product.all
+    pr.find { |obj| obj.id == product_id }
   end
 
 end
