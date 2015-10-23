@@ -10,48 +10,69 @@ class FarMar::Vendor #capitalize all names of class
       @vendorname =attrs[1]
       @numberofemployees =attrs[2].to_i
       @marketid = attrs[3].to_i
-
   end
 
 # self.find(id) - returns the row where the ID field matches the argument
   def self.all
-
-    a=CSV.read("support/vendors.csv")
-    a.collect do |row|
+    read_file.collect do |row|
     FarMar::Vendor.new(row)
     end
-
   end
-
 
 # self.find(id) - returns the row where the ID field matches the argument
   def self.find(i)
-    a=CSV.read("support/vendors.csv")
-    row_match=a.find do |row|
+    row_match=read_file.find do |row|
     i == row[0].to_i
     end
     FarMar::Vendor.new(row_match)
   end
 
+# find a particular vendor by their name
+  def self.find_by_name(name)
+    all.find do |x|
+    name == x.vendorname
+    end
+  end
 
 
-# market - returns the Market instance that is associated with this vendor using the Vendor market_id field
-  def self.marketinstance(vendor_market_id)
-      all.find do |x|
+# market - returns the Market instance that is associated with this vendor
+#using the Vendor market_id field, is this right??? How to tell?
+  def self.market(marketid)
+    FarMar::Market.vendorcollection(marketid)
+  end
+#read file
+#get list of vendors and search by vendor market_id
+#match vendor market_id to market id
 
-      end
+# products - returns a collection of Product instances that are associated with the vendor by the Product vendor_id field.
+  def self.products(product_vendor_id)
+      FarMar::Product.by_vendor(product_vendor_id)
+  end
+
+# sales - returns a collection of Sale instances that are associated with the vendor by the Sale vendor_id field.
+  def self.sales(sale_vendor_id)
+    FarMar::Sale.by_vendor(sale_vendor_id)
+  end
+
+  # revenue - returns the the sum of all of the vendor's sales (in cents)
+  def revenue
+
 
   end
 
-# need to connect the Vendor market_id field to the market instance in the other file
 
+  def self.read_file
+    CSV.read("support/vendors.csv")
+  end
 
-
-
-
-
-
-
+#self.by_market(market_id) - returns a list of all Vendor objects with a market id that matches the input
+  def self.by_market(market_id)
+      all.find_all do |x|
+        market_id.to_i==x.marketid
+        #provides the entire list of vendors associated with one market id
+        # example: FarMar::Vendor.marketinstance(2)
+      end
+  end
 
   # company_size - returns the size of the company using the following rules:
   # 1-3 "Family Business"
@@ -72,13 +93,6 @@ class FarMar::Vendor #capitalize all names of class
        "Big Business"
      end
   end
-
-
-  # company_size
-  # market - returns the Market instance that is associated with this vendor using the Vendor market_id field
-  # products - returns a collection of Product instances that are associated with the vendor by the Product vendor_id field.
-  # sales - returns a collection of Sale instances that are associated with the vendor by the Sale vendor_id field.
-
 
 
 
