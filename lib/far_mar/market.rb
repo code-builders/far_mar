@@ -1,6 +1,3 @@
-
-require 'csv'
-
 class FarMar::Market < FarMar::Base
   attr_accessor :id, :name, :address, :city, :county, :state, :zip
   FILE = ("/Users/khambro/CodeBuilders/far_mar/support/markets.csv")

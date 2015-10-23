@@ -19,5 +19,4 @@ class FarMar::Base
     end
   end
 
-
 end

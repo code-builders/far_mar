@@ -1,5 +1,3 @@
-require 'csv'
-
 class FarMar::Product < FarMar::Base
   attr_accessor :id, :name, :vendor_id
   FILE = ("/Users/khambro/CodeBuilders/far_mar/support/products.csv")

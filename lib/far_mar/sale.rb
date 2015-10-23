@@ -1,5 +1,3 @@
-require 'csv'
-
 class FarMar::Sale < FarMar::Base
   attr_accessor :id, :amount, :purchase_time, :vendor_id, :product_id
   FILE = ("/Users/khambro/CodeBuilders/far_mar/support/sales.csv")
@@ -54,6 +52,10 @@ class FarMar::Sale < FarMar::Base
     end
     sales_within_block
   end
+
+  private
+
+
 
 
 end
