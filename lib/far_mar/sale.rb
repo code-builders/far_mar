@@ -15,7 +15,6 @@ class FarMar::Sale < FarMar::Base
     @purchase_time  = Time.parse(attrs[:purchase_time]) # => add .strftime later
     @vendor_id      = attrs[:vendor_id].to_i
     @product_id     = attrs[:product_id].to_i
-
   end
 
 ### SHARED CLASS METHODS
@@ -27,10 +26,9 @@ class FarMar::Sale < FarMar::Base
         amount:         s[1],
         purchase_time:  s[2],
         vendor_id:      s[3],
-        product_id:     s[4],
+        product_id:     s[4]
       }
     end
-
   end
 
   # here is where self.all and self.find(id) would go if we were to overwrite the

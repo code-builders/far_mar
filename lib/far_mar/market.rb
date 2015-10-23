@@ -34,6 +34,10 @@ class FarMar::Market < FarMar::Base
     end
   end
 
+  # def self.result
+  #   # @result ||= self.read_file
+  # end
+
   # here is where self.all and self.find(id) would go if we were to overwrite the
   # methods inherited from Base
 
@@ -51,4 +55,9 @@ class FarMar::Market < FarMar::Base
     self.all.find_all {|m| m.state == state_name}
   end
 
+  # def self.markets_by_state # list states by # of markets
+  #   grouped_by_state = self.all.group_by {|m| m.state} # => result is hash of hashes
+  #   array = grouped_by_state.sort.to_a # => sorted into an array of arrays
+  #   array.map {|a,m| a[m.size]}
+  # end
 end
