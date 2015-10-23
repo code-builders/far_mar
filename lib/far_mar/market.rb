@@ -1,9 +1,3 @@
-# TO DO:
-# -
-
-# COMMIT NOTES:
-# -
-
 class FarMar::Market < FarMar::Base
   attr_accessor :id, :name, :address, :city, :county, :state, :zip
 
@@ -17,12 +11,10 @@ class FarMar::Market < FarMar::Base
     @zip        = attrs[:zip]
   end
 
-### SHARED CLASS METHODS
-  # CLASS METHOD 1
   def self.read_file
     all_markets = CSV.read("support/markets.csv", "r")
 
-    attributes = all_markets.map do |m| # will return array of hashes, each containing all info per market
+    attributes = all_markets.map do |m|
       { id:       m[0],
         name:     m[1],
         address:  m[2],
@@ -34,30 +26,29 @@ class FarMar::Market < FarMar::Base
     end
   end
 
-  # def self.result
-  #   # @result ||= self.read_file
-  # end
+  # Note to self: this is where self.all and self.find(id) would go if we were
+  # to overwrite the methods inherited from Base
 
-  # here is where self.all and self.find(id) would go if we were to overwrite the
-  # methods inherited from Base
-
-### UNIQUE CLASS METHODS:
-  def vendors # ret all Vendor instances associated with market by market_id
-    all_vendors = FarMar::Vendor.all
-    match = all_vendors.find_all {|v| v.market_id == self.id}
+  def vendors
+    FarMar::Vendor.all.find_all {|v| v.market_id == self.id}
   end
 
-  def self.find_by_state (state_name) # ret first market object in state passed in
+  def vendors_by_revenue
+      
+    self.vendors.map {|v| "#{v.name}: $#{v.revenue/100}"}.sort
+  end
+
+  def self.find_by_state (state_name)
     self.all.find {|m| m.state == state_name}
   end
 
-  def self.find_all_by_state (state_name) # ret all market objects in state passed in
+  def self.find_all_by_state (state_name)
     self.all.find_all {|m| m.state == state_name}
   end
 
-  # def self.markets_by_state # list states by # of markets
-  #   grouped_by_state = self.all.group_by {|m| m.state} # => result is hash of hashes
-  #   array = grouped_by_state.sort.to_a # => sorted into an array of arrays
-  #   array.map {|a,m| a[m.size]}
-  # end
+  def self.markets_by_state
+    grouped_by_state = self.all.group_by {|m| m.state}
+    array = grouped_by_state.sort.to_a # => sorted into an array of arrays
+    array.map {|a| puts "#{a[0]}: #{a[1].size} markets"} #a[0] = state name, #a[1] = arr of all mkts in state
+  end
 end
