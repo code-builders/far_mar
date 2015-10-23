@@ -35,7 +35,7 @@ class FarMar::Market  #capitalize all names of class
 # self.find(id) - returns the row where the ID field matches the argument
   def self.find(id) #find id
     row_match=read_file.find do |row|
-    id== row[0].to_i
+    id == row[0].to_i
     end
     FarMar::Market.new(row_match) #don't forget to make a new instance
   end
@@ -43,7 +43,7 @@ class FarMar::Market  #capitalize all names of class
     # for each row
     # create a new instance of FarMar:: Market
     # compare the i variable(parameter coming in) to the market row id
-    # return if that is a math
+    # return if that is a match
     # creat a new instance with that match
 
 
@@ -86,9 +86,9 @@ class FarMar::Market  #capitalize all names of class
   #match up market id and vendor id
   #provide a collection of all vendor instances associated with market by id
 
-  def self.vendors(id)
+  def vendors ##DON'T NEED TO PASS IN AN ARGUMENT JUST THE VALUE FROM THE ARGUMENT!!!!
   # lookup every vendor that matches this market id
-    FarMar::Vendor.by_market(id)
+    FarMar::Vendor.by_market(@id)
   ##OMG YAY, REMEMBER THIS TO BRING IN CLASSES FOR DIFFERENT METHODS,
   ##bring in class object and method and pass in the id from market
   end
