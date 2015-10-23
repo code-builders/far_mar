@@ -36,13 +36,11 @@ class FarMar::Sale < FarMar::Base
   end
 
   def vendor
-    ven = FarMar::Vendor.all
-    ven.find { |obj| obj.id == vendor_id }
+    FarMar::Vendor.find(id)
   end
 
   def product
-    pr = FarMar::Product.all
-    pr.find { |obj| obj.id == product_id }
+    FarMar::Product.find(id)
   end
 
 end

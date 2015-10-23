@@ -1,7 +1,7 @@
 class FarMar::Base
 
   def self.all
-    CSV.read(path).map { |line| new(line) }
+    @all ||= CSV.read(path).map { |line| new(line) }
   end
 
   def self.find(id)

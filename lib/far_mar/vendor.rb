@@ -32,8 +32,8 @@ class FarMar::Vendor < FarMar::Base
   end
 
   def revenue
-    all = sales.map { |obj| obj.amount }
-    all.inject(:+)/100
+    rev = sales.map { |obj| obj.amount }
+    rev.inject(:+)/100
   end
 
   def company_size
