@@ -13,8 +13,8 @@ class FarMar::Sale
   end
 
   def self.all
-    sales = CSV.open("/Users/khambro/CodeBuilders/far_mar/support/sales.csv", "r")
-    sales.read.collect do |attrs|
+    sales = CSV.read("/Users/khambro/CodeBuilders/far_mar/support/sales.csv")
+    sales.collect do |attrs|
       self.new(attrs)
     end
   end
@@ -57,14 +57,14 @@ class FarMar::Sale
 
   def self.between(beginning_time, end_time)
     require 'time'
-    within = []
-    sales_within_block = self.all.group_by do |obj|
-      obj.purchase_time
-      if Time.parse(obj.purchase_time).between?(Time.parse(beginning_time), Time.parse(end_time))
-        within << obj
+    sales_within_block = []
+     self.all.group_by do |obj|
+        obj.purchase_time
+      if obj.purchase_time.between?(Time.parse(beginning_time), Time.parse(end_time))
+        sales_within_block << obj
       end
     end
-    within
+    sales_within_block
   end
 
 

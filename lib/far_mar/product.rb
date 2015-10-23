@@ -10,8 +10,8 @@ class FarMar::Product
   end
 
   def self.all
-    products = CSV.open("/Users/khambro/CodeBuilders/far_mar/support/products.csv", "r")
-    products.read.collect do |attrs|
+    products = CSV.read("/Users/khambro/CodeBuilders/far_mar/support/products.csv")
+    products.collect do |attrs|
       self.new(attrs)
     end
   end

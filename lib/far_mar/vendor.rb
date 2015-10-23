@@ -11,8 +11,8 @@ class FarMar::Vendor
   end
 
   def self.all
-    vendors = CSV.open("/Users/khambro/CodeBuilders/far_mar/support/vendors.csv", "r")
-    vendors.read.collect do |attrs|
+    vendors = CSV.read("/Users/khambro/CodeBuilders/far_mar/support/vendors.csv")
+    vendors.collect do |attrs|
     self.new(attrs)
     end
   end

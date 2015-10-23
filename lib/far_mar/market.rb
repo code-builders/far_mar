@@ -15,8 +15,8 @@ class FarMar::Market
   end
 
   def self.all
-    markets = CSV.open("/Users/khambro/CodeBuilders/far_mar/support/markets.csv", "r")
-    markets.read.collect do |attrs|
+    markets = CSV.read("/Users/khambro/CodeBuilders/far_mar/support/markets.csv")
+    markets.collect do |attrs|
       self.new(attrs)
     end
   end
