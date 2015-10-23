@@ -5,8 +5,7 @@ class FarMar::Base
   end
 
   def self.find(id)
-    array = CSV.read(path)
-    row_match = array.find { |row| id == row[0].to_i }
+    row_match = CSV.open(path).find { |row| id == row[0].to_i }
     new(row_match)
   end
 

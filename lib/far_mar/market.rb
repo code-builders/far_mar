@@ -22,8 +22,7 @@ class FarMar::Market < FarMar::Base
   end
 
   def self.find_by_state(state_name)
-    array = CSV.read(path)
-    row = array.find { |line| line[5] == state }
+    row = CSV.read(path).find { |line| line[5] == state_name }
     FarMar::Market.new(row)
   end
 
