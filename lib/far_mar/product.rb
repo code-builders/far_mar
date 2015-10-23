@@ -8,8 +8,7 @@ class FarMar::Product
 
     @id =attrs[0].to_i
     @name =attrs[1]
-    @vendorid =attrs[2]
-
+    @vendorid =attrs[2].to_i
   end
 
 # self.all - returns all rows of the CSV file as objects
@@ -31,15 +30,28 @@ class FarMar::Product
     CSV.read("support/products.csv")
   end
 
+# self.by_vendor(vendor_id)- returns a list of all Product objects with a vendor id that matches the input
 
-  # vendor - returns the Vendor instance that is associated with this vendor using the Product vendor_id field
-#
-# self.by_vendor(vendor_id)`- returns a list of all `Product` objects with a vendor id that matches the input"
-  # def self.by_vendor(vendor_id)
-  #   read_file.find_all do |vendor_id|
+  def self.by_vendor(vendor_id)
+    all.find_all do |x|
+    vendor_id.to_i==x.vendorid
+    end
+  end
+
+
+  # # vendor - returns the Vendor instance that is associated with this vendor using the Product vendor_id field
   #
-  #
+  # def self.vendor(vendorid)
+  #   FarMar::Vendor.products(vendorid)
   # end
+
+
+  # sales - returns a collection of Sale instances that are associated with the product using the Sale product_id field.
+  def self.sales(product_id)
+    FarMar::Sale.by_product(product_id)
+  end
+
+
 
   # def vendor(x)
   #   read_file.find do |x|
