@@ -37,7 +37,7 @@ class FarMar::Market  #capitalize all names of class
     row_match=read_file.find do |row|
     id== row[0].to_i
     end
-    FarMar::Market.new(row_match)
+    FarMar::Market.new(row_match) #don't forget to make a new instance
   end
     # read the csv file of markets
     # for each row
@@ -74,11 +74,6 @@ class FarMar::Market  #capitalize all names of class
     end
   end
 
-  def vendors
-    # lookup every vendor that matches this market id
-    FarMar::Vendor.by_market(@id)
-    
-  end
 
 # vendors - returns a collection of Vendor instances that are associated with the market by the market_id field.
   def self.vendorcollection(id)
@@ -91,8 +86,18 @@ class FarMar::Market  #capitalize all names of class
   #match up market id and vendor id
   #provide a collection of all vendor instances associated with market by id
 
-
+  def self.vendors(id)
+  # lookup every vendor that matches this market id
+    FarMar::Vendor.by_market(id)
+  ##OMG YAY, REMEMBER THIS TO BRING IN CLASSES FOR DIFFERENT METHODS,
+  ##bring in class object and method and pass in the id from market
+  end
+  #retrieve market id
+  #get market id from Vendor classfile
+  #match up market id and vendor id
+  #provide a collection of all vendor instances associated with market by id
   #read file method
+
   def self.read_file
    CSV.read("support/markets.csv")
   end
