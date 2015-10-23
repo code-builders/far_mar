@@ -1,8 +1,9 @@
 
 require 'csv'
 
-class FarMar::Market
+class FarMar::Market < FarMar::Base
   attr_accessor :id, :name, :address, :city, :county, :state, :zip
+  FILE = ("/Users/khambro/CodeBuilders/far_mar/support/markets.csv")
 
   def initialize(attrs)
    @id= attrs[0].to_i
@@ -13,20 +14,6 @@ class FarMar::Market
    @state = attrs[5]
    @zip = attrs[6].to_i
   end
-
-  def self.all
-    markets = CSV.read("/Users/khambro/CodeBuilders/far_mar/support/markets.csv")
-    markets.collect do |attrs|
-      self.new(attrs)
-    end
-  end
-
-  def self.find(id)
-    all.find do |f|
-      f.id == id
-    end
-  end
-
 
   def vendors
     vendors = FarMar::Vendor.all
@@ -49,6 +36,5 @@ class FarMar::Market
       f.state == state_name
     end
   end
-
 
 end

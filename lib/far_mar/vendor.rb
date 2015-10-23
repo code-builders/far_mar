@@ -1,7 +1,8 @@
 require 'csv'
 
-class FarMar::Vendor
+class FarMar::Vendor < FarMar::Base
   attr_accessor :id, :name, :no_of_employees, :market_id
+  FILE = ("/Users/khambro/CodeBuilders/far_mar/support/vendors.csv")
 
   def initialize(attrs)
    @id= attrs[0].to_i
@@ -10,18 +11,6 @@ class FarMar::Vendor
    @market_id = attrs[3].to_i
   end
 
-  def self.all
-    vendors = CSV.read("/Users/khambro/CodeBuilders/far_mar/support/vendors.csv")
-    vendors.collect do |attrs|
-    self.new(attrs)
-    end
-  end
-
-  def self.find(id)
-    self.all.find do |f|
-      f.id == id
-    end
-  end
 
   def market
     markets = FarMar::Market.all
@@ -31,9 +20,6 @@ class FarMar::Vendor
     all_markets[@id].first
   end
 
-#  ) FarMar::Vendor associations market_id matches the markets id
-#     Failure/Error: expect(vendor.market.id).to eq vendor.market_id
- #undefined method `id' for #<Array:0x007ff3928e2f78>
 
   def products
     products = FarMar::Product.all

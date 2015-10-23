@@ -1,7 +1,8 @@
 require 'csv'
 
-class FarMar::Product
+class FarMar::Product < FarMar::Base
   attr_accessor :id, :name, :vendor_id
+  FILE = ("/Users/khambro/CodeBuilders/far_mar/support/products.csv")
 
   def initialize(attrs)
    @id= attrs[0].to_i
@@ -9,18 +10,6 @@ class FarMar::Product
    @vendor_id = attrs[2].to_i
   end
 
-  def self.all
-    products = CSV.read("/Users/khambro/CodeBuilders/far_mar/support/products.csv")
-    products.collect do |attrs|
-      self.new(attrs)
-    end
-  end
-
-  def self.find(id)
-    self.all.find do |f|
-     f.id == id
-    end
-  end
 
   def vendor
     vendors = FarMar::Vendor.all

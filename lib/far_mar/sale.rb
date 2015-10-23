@@ -1,7 +1,8 @@
 require 'csv'
 
-class FarMar::Sale
+class FarMar::Sale < FarMar::Base
   attr_accessor :id, :amount, :purchase_time, :vendor_id, :product_id
+  FILE = ("/Users/khambro/CodeBuilders/far_mar/support/sales.csv")
 
   def initialize(attrs)
     require 'time'
@@ -10,19 +11,6 @@ class FarMar::Sale
     @purchase_time  = Time.parse(attrs[2])
     @vendor_id      = attrs[3].to_i
     @product_id     = attrs[4].to_i
-  end
-
-  def self.all
-    sales = CSV.read("/Users/khambro/CodeBuilders/far_mar/support/sales.csv")
-    sales.collect do |attrs|
-      self.new(attrs)
-    end
-  end
-
-  def self.find(id)
-    self.all.find do |f|
-      f.id == id
-    end
   end
 
   def vendor
@@ -67,13 +55,5 @@ class FarMar::Sale
     sales_within_block
   end
 
-
-
-
-
-#  - returns a collection of Sale objects where the purchase time is between the two times given as arguments
-
-
-#self.between(beginning_time, end_time) - returns a collection of Sale objects where the purchase time is between the two times given as arguments
 
 end
