@@ -23,7 +23,7 @@ class FarMar::Market < FarMar::Base
 
   def self.find_by_state(state_name)
     row = read_file.find { |line| line[5] == state_name }
-    FarMar::Market.new(row)
+    new(row)
   end
 
   def self.find_all_by_state(state_name)
