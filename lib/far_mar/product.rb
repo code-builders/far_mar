@@ -20,9 +20,10 @@ class FarMar::Product
 
 # self.find(id) - returns the row where the ID field matches the argument
   def self.find(id)
-    read_file.find do |row|
-    id == row[0].to_i
+    row_match=read_file.find do |row|
+    id.to_i== row[0].to_i
     end
+    FarMar::Product.new(row_match)
   end
 
 #READ FILE METHOD
@@ -40,24 +41,20 @@ class FarMar::Product
 
 
   # # vendor - returns the Vendor instance that is associated with this vendor using the Product vendor_id field
-  #
-  # def self.vendor(vendorid)
-  #   FarMar::Vendor.products(vendorid)
-  # end
+  def self.vendor(vendorid)
+    FarMar::Vendor.find(vendorid)
+  end
 
 
   # sales - returns a collection of Sale instances that are associated with the product using the Sale product_id field.
   def self.sales(product_id)
-    FarMar::Sale.by_product(product_id)
+    FarMar::Sale.find.by_product(product_id)
   end
-
-
-
-  # def vendor(x)
-  #   read_file.find do |x|
-  #   x == row[2].to_i
-  #
-  # end
+#
+# # number_of_sales - returns the number of times this product has been sold.
+#
+#   def self.number_of_sales()
+#     FarMar::Sale.by
 
 end
 #
