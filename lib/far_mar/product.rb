@@ -48,13 +48,14 @@ class FarMar::Product
 
   # sales - returns a collection of Sale instances that are associated with the product using the Sale product_id field.
   def self.sales(product_id)
-    FarMar::Sale.find.by_product(product_id)
+    FarMar::Sale.by_product(product_id)
   end
 #
-# # number_of_sales - returns the number of times this product has been sold.
-#
-#   def self.number_of_sales()
-#     FarMar::Sale.by
+# # number_of_sales - returns the number of times this product has been sold.#ONLY ONE I NEED
+# #
+  # def number_of_sales
+  #   FarMar::Sale.by_product(productid).count
+  # end
 
 end
 #
