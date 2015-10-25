@@ -9,9 +9,7 @@ class FarMar::Product < FarMar::Base
   end
 
   def self.read_file
-    all_products = CSV.read("support/products.csv", "r")
-
-    all_products.map do |pr|
+    CSV.read("support/products.csv", "r").map do |pr|
       { id:       pr[0],
         name:     pr[1],
         vendor_id:pr[2]

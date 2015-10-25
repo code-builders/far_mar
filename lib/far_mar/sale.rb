@@ -1,4 +1,4 @@
-## TO DO
+## FUTURE IMPROVEMENTS:
 # -refactor time formatting w/ .strftime for better readability
 # -refactor self.between method for more user_friendly input (not assign variables, use Time.parse)
 
@@ -15,9 +15,7 @@ class FarMar::Sale < FarMar::Base
   end
 
   def self.read_file
-    all_sales = CSV.read("support/sales.csv", "r")
-
-    attributes = all_sales.map do |s|
+    CSV.read("support/sales.csv", "r").map do |s|
       { id:             s[0],
         amount:         s[1],
         purchase_time:  s[2],

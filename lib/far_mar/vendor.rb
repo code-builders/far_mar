@@ -10,9 +10,7 @@ class FarMar::Vendor < FarMar::Base
   end
 
   def self.read_file
-    all_vendors = CSV.open("support/vendors.csv", "r")
-
-    attributes = all_vendors.map do |v|
+    CSV.open("support/vendors.csv", "r").map do |v|
       { id:              v[0],
         name:            v[1],
         no_of_employees: v[2],
@@ -37,9 +35,9 @@ class FarMar::Vendor < FarMar::Base
   end
 
   def revenue
-    self.sales.map {|s| s.amount}.inject{|sum,x| sum + x }
+    self.sales.map {|s| s.amount}.inject{|sum,x| sum + x}
 
-    # still haven't gotten this to work:
+    # still haven't gotten this alternate syntax to work:
     # self.sales.inject {|sum, sales| sum + sales.amount}
   end
 
@@ -61,21 +59,17 @@ class FarMar::Vendor < FarMar::Base
     end
   end
 
-  # GOAL: vendor's sales grouped by hour and day. When do sales peak?
-  def sales_by_hour
-    self.sales.group_by {|s| s.purchase_time.hour}.map {|h| h[1].size}
+  def sales_by_time
+    sorted = self.sales.sort_by {|s| s.purchase_time}
+    sorted.map {|s| puts s.purchase_time.strftime("%b %e %y %l %m %p %Z")}
 
-    sales_grouped = self.sales.group_by {|s| s.purchase_time.hour} # => all times of sale, in hash form
-    sales_grouped.map {|h| h[1].size}
-  end
-
-  def sales_by_day
-    sales_grouped = self.sales.group_by {|s| s.purchase_time.day} # => all dates of sale, in hash form
-    sales_grouped.map {|h| h[1].size}
+    # two lines feels more readable here
+    # but on one line, the code would look like this:
+    # self.sales.sort_by {|s| s.purchase_time}.map {|s| puts s.purchase_time.strftime("%b %e %y %l %m %p %Z")}
   end
 
   def sale_amounts
-    puts "TBD!" # self.sales.map
+    self.sales.map {|s| s.amount}
   end
 
 end

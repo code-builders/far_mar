@@ -5,11 +5,11 @@ class FarMar::Base
   end
 
   def read_file
-    "needs to be defined"
+    "class needs to be defined in order to read file"
   end
 
   def self.all
-    @all ||= self.read_file.map {|x| self.new(x)} 
+    @all ||= self.read_file.map {|x| self.new(x)}
   end
 
   def self.find (id)
