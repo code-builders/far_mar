@@ -56,7 +56,7 @@ class FarMar::Vendor #capitalize all names of class
 
   # revenue - returns the the sum of all of the vendor's sales (in cents)
   def revenue
-
+##ONLY ONE I NEED TO WORK ON!!!!
 
   end
 
