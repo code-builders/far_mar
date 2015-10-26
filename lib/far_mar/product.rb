@@ -1,15 +1,14 @@
 require 'csv'
 
-class FarMar::Product
+class FarMar::Product < FarMar::Base
 
   PRODUCT_ARRAY = CSV.read("support/products.csv")
 
-  attr_reader :id,
-              :name,
+  attr_reader :name,
               :vendor_id
 
     def initialize(attrs)
-      @id          = attrs[:id].to_i
+      super(attrs[:id])
       @name        = attrs[:name]
       @vendor_id   = attrs[:vendor_id].to_i
     end
@@ -34,21 +33,22 @@ class FarMar::Product
     return new_product_array
   end
 
-  def self.find(id)
-    # self.find(id) - returns the row where the ID field matches the argument
-    # product_array = CSV.read("support/products.csv")
-    PRODUCT_ARRAY.each do |product|
-      product_info = {
-        id:         product[0],
-        name:       product[1],
-        vendor_id:  product[2],
-      }
-      if product[0].to_i == id
-        new_product = FarMar::Product.new(product_info)
-        return new_product
-      end
-    end
-  end
+  # def self.find(id)
+  #   # self.find(id) - returns the row where the ID field matches the argument
+  #   # product_array = CSV.read("support/products.csv")
+  #   # self.all.find {|object| object.id == id}
+  #   # PRODUCT_ARRAY.each do |product|
+  #   #   product_info = {
+  #   #     id:         product[0],
+  #   #     name:       product[1],
+  #   #     vendor_id:  product[2],
+  #   #   }
+  #   #   if product[0].to_i == id
+  #   #     new_product = FarMar::Product.new(product_info)
+  #   #     return new_product
+  #   #   end
+  #   # end
+  # end
 
   def vendor
     # vendor - returns the Vendor instance that is associated with this vendor using the Product vendor_id field
@@ -93,6 +93,11 @@ class FarMar::Product
     #   end
     # end
     # return product_objects
+  end
+
+  def self.find_by_product(product_name)
+    product_array = self.all
+    product_array.find_all {|product| product.name.downcase.include? product_name.downcase}
   end
 
 end

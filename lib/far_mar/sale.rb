@@ -1,18 +1,17 @@
 require 'csv'
 require 'time'
 
-class FarMar::Sale
+class FarMar::Sale < FarMar::Base
 
   SALE_ARRAY = CSV.read("support/sales.csv")
 
-  attr_reader :id,
-              :amount,
+  attr_reader :amount,
               :purchase_time,
               :vendor_id,
               :product_id
 
     def initialize(attrs)
-      @id               = attrs[:id].to_i
+      super(attrs[:id])
       @amount           = attrs[:amount].to_i
       @purchase_time    = Time.parse(attrs[:purchase_time])
       @vendor_id        = attrs[:vendor_id].to_i
@@ -41,23 +40,24 @@ class FarMar::Sale
     return new_sale_array
   end
 
-  def self.find(id)
-    # self.find(id) - returns the row where the ID field matches the argument
-    # sale_array = CSV.read("support/sales.csv")
-    SALE_ARRAY.each do |sale|
-      sale_info = {
-        id:               sale[0],
-        amount:           sale[1],
-        purchase_time:    sale[2],
-        vendor_id:        sale[3],
-        product_id:       sale[4]
-      }
-      if sale[0].to_i == id
-        new_sale = FarMar::Sale.new(sale_info)
-        return new_sale
-      end
-    end
-  end
+  # def self.find(id)
+  #   # self.find(id) - returns the row where the ID field matches the argument
+  #   # sale_array = CSV.read("support/sales.csv")
+  #   # self.all.find {|object| object.id == id}
+  #   # SALE_ARRAY.each do |sale|
+  #   #   sale_info = {
+  #   #     id:               sale[0],
+  #   #     amount:           sale[1],
+  #   #     purchase_time:    sale[2],
+  #   #     vendor_id:        sale[3],
+  #   #     product_id:       sale[4]
+  #   #   }
+  #   #   if sale[0].to_i == id
+  #   #     new_sale = FarMar::Sale.new(sale_info)
+  #   #     return new_sale
+  #   #   end
+  #   # end
+  # end
 
   def vendor
     # vendor - returns the Vendor instance that is associated with this sale using the Sale vendor_id field

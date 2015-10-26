@@ -1,16 +1,15 @@
 require 'csv'
 
-class FarMar::Vendor
+class FarMar::Vendor < FarMar::Base
 
   VENDOR_ARRAY = CSV.read("support/vendors.csv")
 
-  attr_reader :id,
-              :name,
+  attr_reader :name,
               :no_of_employees,
               :market_id
 
     def initialize(attrs)
-      @id               = attrs[:id].to_i
+      super(attrs[:id])
       @name             = attrs[:name]
       @no_of_employees  = attrs[:no_of_employees].to_i
       @market_id        = attrs[:market_id].to_i
@@ -37,22 +36,23 @@ class FarMar::Vendor
     return new_vendor_array
   end
 
-  def self.find(id)
-    # self.find(id) - returns the row where the ID field matches the argument
-    # vendor_array = CSV.read("support/vendors.csv")
-    VENDOR_ARRAY.each do |vendor|
-      vendor_info = {
-        id:               vendor[0],
-        name:             vendor[1],
-        no_of_employees:  vendor[2],
-        market_id:        vendor[3]
-      }
-      if vendor[0].to_i == id
-        new_vendor = FarMar::Vendor.new(vendor_info)
-        return new_vendor
-      end
-    end
-  end
+  # def self.find(id)
+  #   # self.find(id) - returns the row where the ID field matches the argument
+  #   # vendor_array = CSV.read("support/vendors.csv")
+  #   # self.all.find {|object| object.id == id}
+  # #   VENDOR_ARRAY.each do |vendor|
+  # #     vendor_info = {
+  # #       id:               vendor[0],
+  # #       name:             vendor[1],
+  # #       no_of_employees:  vendor[2],
+  # #       market_id:        vendor[3]
+  # #     }
+  # #     if vendor[0].to_i == id
+  # #       new_vendor = FarMar::Vendor.new(vendor_info)
+  # #       return new_vendor
+  # #     end
+  # #   end
+  # end
 
   def market
   # market - returns the Market instance that is associated with this vendor using the Vendor market_id field
@@ -125,4 +125,25 @@ class FarMar::Vendor
     end
   end
 
+  # def self.seller_by_product(product_name)
+  #   vendor_list = []
+  #   self.all.each do |vendor|
+  #     vendor.products.each do |product|
+  #       if product.name.downcase.include? product_name.downcase
+  #         vendor_list << vendor
+  #         break
+  #       end
+  #     end
+  #   end
+  #   return vendor_list
+  # end
+
+  def self.seller_by_product(product_name)
+    vendor_list = []
+    FarMar::Product.find_by_product(product_name).each do |product|
+      vendor_list << product.vendor
+    end
+    return vendor_list
+  end
+  
 end

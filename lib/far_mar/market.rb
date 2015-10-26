@@ -1,11 +1,10 @@
 require 'csv'
 
-class FarMar::Market
+class FarMar::Market < FarMar::Base
 
   MARKET_ARRAY = CSV.read("support/markets.csv")
 
-  attr_reader :id,
-              :name,
+  attr_reader :name,
               :address,
               :city,
               :county,
@@ -13,7 +12,7 @@ class FarMar::Market
               :zip
 
     def initialize(attrs)
-      @id      = attrs[:id].to_i      # @id = attrs[0].to_i
+      super(attrs[:id])           # @id = attrs[0].to_i
       @name    = attrs[:name]     # @name = attrs[1]
       @address = attrs[:address]  # @address = attrs[2]
       @city    = attrs[:city]     # @city = attrs[3]
@@ -46,28 +45,11 @@ class FarMar::Market
     return new_market_array
   end
 
-  def self.find(id)
-    # self.find(id) - returns the row where the ID field matches the argument
-    # market_array = CSV.read("support/markets.csv") # market_array = (self)read_file
-    MARKET_ARRAY.each do |market|
-      market_info = {
-        id:      market[0],
-        name:    market[1],           # all.find do |row|
-        address: market[2],           # row_match = market_array.find do |row|
-        city:    market[3],             # id == row[0]
-        county:  market[4],           # end
-        state:   market[5],           # FarMar::Market.new(row_match)
-        zip:     market[6]
-      }
-      if market[0].to_i == id
-        new_market = FarMar::Market.new(market_info)
-        return new_market
-      end
-    end
-  end
-
-  # def self.read_file
-  #   CSV.read("support/markets.csv")
+  # def self.find(id)
+  #   # self.find(id) - returns the row where the ID field matches the argument
+  #   # market_array = CSV.read("support/markets.csv") # market_array = (self)read_file
+  #   # self.all.find {|object| object.id == id}
+  #   super
   # end
 
   def vendors
@@ -92,4 +74,15 @@ class FarMar::Market
     all_markets = FarMar::Market.all
     all_markets.find_all {|market| market.state == state_name.capitalize}
   end
+
+  # def self.find_by_product(product_name)
+  #   # all_markets = self.all
+  #   # all_vendors = FarMar::Vendor.all
+  #   all_products = FarMar::Product.all
+  #     if all_products.include? product_name.capitalize
+  #       FarMar::Vendor.
+
+
+      # end
+  # end
 end
