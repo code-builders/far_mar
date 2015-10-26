@@ -1,4 +1,4 @@
-class FarMar::Product
+class FarMar::Product < FarMar::Base
 
   attr_accessor :id,
                 :name,
@@ -15,33 +15,21 @@ class FarMar::Product
     end
 
     def self.all
-      CSV.open(path).map do |line|
+      @all ||= all_calc
+    end
+
+    def self.all_calc
+      CSV.read(path).map do |line|
         new(
           id:        line[0].to_i,
           name:      line[1],
           vendor_id: line[2].to_i
-          )
+        )
       end
     end
 
-    def self.find(id)   # return the row where the ID field matches the argument
-        all.find do |obj|  # returns all product objects as array
-          obj.id == id                  # find the array with the (argument) for :id
-        end                 # return the whole array/line of that argument
-    end
-
-    def vendor
-      FarMar::Vendor.all.find do |v|
-        v.id == @vendor_id
-      end
-    end
-
-    def sales
-      sale = FarMar::Sale.all
-      sales_by_product = sale.group_by do |prod|
-        prod.product_id
-      end
-      sales_by_product[@id]
+    def sales                                     
+      FarMar::Sale.group_by_product[@id]
     end
 
     def no_of_sales

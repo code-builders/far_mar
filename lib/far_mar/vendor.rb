@@ -1,4 +1,4 @@
-class FarMar::Vendor
+class FarMar::Vendor < FarMar::Base
 
   attr_accessor :id,
                 :name,
@@ -17,50 +17,57 @@ class FarMar::Vendor
     end
 
     def self.all
-      CSV.open(path).map do |line|
+      @all ||= all_calc
+    end
+
+    def self.all_calc
+      CSV.read(path).map do |line|
         new(
           id:              line[0].to_i,
           name:            line[1],
           no_of_employees: line[2].to_i,
           market_id:       line[3].to_i
-          )
+        )
       end
     end
 
-    def self.find(id)   # return the row where the ID field matches the argument
-        all.find do |obj|  # returns all vendor objects as array
-          obj.id == id                  # find the array with the (argument) for :id
-        end                 # return the whole array/line of that argument
-    end
-
     def market
-      market = FarMar::Market.all
-      market.find do |obj|
+      FarMar::Market.all.find do |obj|
         obj.id == @market_id
       end
     end
 
     def products
-      product = FarMar::Product.all
-      products_by_vendor = product.group_by do |prod|
+      product = FarMar::Product.all.group_by do |prod|
         prod.vendor_id
       end
-      products_by_vendor[@id]
+      product[@id]
     end
 
     def sales
-      sale = FarMar::Sale.all
-      sales_by_vendor = sale.group_by do |sales|
+      @sales ||= sales_calc
+    end
+
+    def sales_calc
+      sale = FarMar::Sale.all.group_by do |sales|
         sales.vendor_id
       end
-      sales_by_vendor[@id]
+      sale[@id]
     end
 
     def revenue
+      @revenue ||= revenue_calc
+    end
+
+    def revenue_calc
       sum = sales.map do |amnt|
       amnt.amount.to_f / 100
       end
-      "$" + sum.reduce(:+).to_s
+      sum.reduce(:+).to_s
+    end
+
+    def rev_by_employee               # Added method
+      revenue.to_f / no_of_employees
     end
 
     def self.by_market(market_id)
@@ -70,17 +77,21 @@ class FarMar::Vendor
     end
 
     def company_size
+      @company_size ||= company_size_calc
+    end
+
+    def company_size_calc
       if
         no_of_employees <= 3
-        puts "Family Business"
+        "Family Business"
       elsif
         no_of_employees > 3 && no_of_employees < 16
-        puts "Small Business"
+        "Small Business"
       elsif
         no_of_employees > 15 && no_of_employees < 101
-        puts "Medium Business"
+        "Medium Business"
       else
-        puts "Big Business"
+        "Big Business"
       end
     end
 end
