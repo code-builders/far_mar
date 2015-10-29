@@ -1,6 +1,6 @@
 class FarMar::Product < FarMar::Base
   attr_accessor :id, :name, :vendor_id
-  FILE = ("/Users/khambro/CodeBuilders/far_mar/support/products.csv")
+  FILE = ("support/products.csv")
 
   def initialize(attrs)
    @id= attrs[0].to_i

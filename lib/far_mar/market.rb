@@ -1,6 +1,6 @@
 class FarMar::Market < FarMar::Base
   attr_accessor :id, :name, :address, :city, :county, :state, :zip
-  FILE = ("/Users/khambro/CodeBuilders/far_mar/support/markets.csv")
+  FILE = ("support/markets.csv")
 
   def initialize(attrs)
    @id= attrs[0].to_i
@@ -12,12 +12,13 @@ class FarMar::Market < FarMar::Base
    @zip = attrs[6].to_i
   end
 
+#refactor all ones like this
   def vendors
-    vendors = FarMar::Vendor.all
-    all_vendors = vendors.group_by do |obj|
-      obj.market_id
-    end
-    all_vendors[@id]
+    FarMar::Vendor.by_market(@id)
+    # all_vendors = vendors.group_by do |obj|
+    #   obj.market_id
+    # end
+    # all_vendors[@id]
   end
 
   def self.find_by_state_name(state_name)
