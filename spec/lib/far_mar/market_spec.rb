@@ -5,7 +5,7 @@ describe FarMar::Market do
       expect(FarMar::Market).to respond_to :all
     end
 
-    it "'all' should return" do
+    it "'all' should returns 500 market objects" do
       expect(FarMar::Market.all.count).to eq 500
     end
 
