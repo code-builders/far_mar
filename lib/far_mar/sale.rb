@@ -1,9 +1,8 @@
 class FarMar::Sale < FarMar::Base
   attr_accessor :id, :amount, :purchase_time, :vendor_id, :product_id
-  FILE = ("/Users/khambro/CodeBuilders/far_mar/support/sales.csv")
+  FILE = ("support/sales.csv")
 
   def initialize(attrs)
-    require 'time'
     @id             = attrs[0].to_i
     @amount         = attrs[1].to_i
     @purchase_time  = Time.parse(attrs[2])
@@ -41,21 +40,15 @@ class FarMar::Sale < FarMar::Base
     all_sale[vendor_id]
   end
 
+#use find all to decrease this one
   def self.between(beginning_time, end_time)
-    require 'time'
-    sales_within_block = []
-     self.all.group_by do |obj|
-        obj.purchase_time
+    #sales_within_block = []
+     self.all.find_all do |obj|
+        #obj.purchase_time
       if obj.purchase_time.between?(Time.parse(beginning_time), Time.parse(end_time))
-        sales_within_block << obj
+    #    sales_within_block << obj
       end
-    end
-    sales_within_block
+     end
   end
-
-  private
-
-
-
 
 end
